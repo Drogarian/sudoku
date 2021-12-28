@@ -133,16 +133,6 @@ function generateBoard(){
     brd[7] = [].concat([null, null, null, null, null, null]).concat(grid_8.slice(3, 6));
     brd[8] = [].concat([null, null, null, null, null, null]).concat(grid_8.slice(6));
 
-    // brd[0] = [null, 3, 9, null, null, null, 5, 4, null];
-    // brd[1] = [null, 6, 5, 4, null, null, 9, null, null];
-    // brd[2] = [7, 4, 2, 3, 5, 9, 8, 1, 6];
-    // brd[3] = [null, null, 4, null, null, null, 2, null, null];
-    // brd[4] = [null, 1, 6, 8, null, 5, 4, null, null];
-    // brd[5] = [null, null, 7, null, 4, null, 6, null, null];
-    // brd[6] = [4, 2, 8, null, null, null, 7, 9, 5];
-    // brd[7] = [5, 7, 1, 9, 8, 4, 3, 6, 2];
-    // brd[8] = [6, 9, 3, 5, 7, 2, 1, 8, 4];
-
     return brd
 
 }
@@ -282,6 +272,13 @@ function startNewGame(diff) {
     removeDiff(diff, brd);
     originalBoard = [...brd];
     populateBoard(brd);
+    const boardEventListner = document.querySelectorAll(".brd-el");
+
+    boardEventListner.forEach(element => {
+        element.addEventListener("click", (e)=>{
+            console.log(element.id);
+        });
+    });
 }
 
 // LETS THE USER SELECT THE DIFFICULTY MAKES THE DIFFICULTY OPTIONS AVAILABLE
@@ -370,14 +367,31 @@ function giveHint() {
     }
     let hintPos = findShortArr(brd);
     originalBoard[hintPos[0]][hintPos[1]] = [...brd[hintPos[0]][hintPos[1]]];
+    if (originalBoard[hintPos[0]][hintPos[1]].length == 1) {
+        originalBoard[hintPos[0]][hintPos[1]] = originalBoard[hintPos[0]][hintPos[1]][0]
+    }
     populateBoard(originalBoard);
 }
 
-
+// Updates the HTML File with changes made
 function populateBoard(board) {
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
+            htmlBoard[i][j].style.background = "lightgray";
             htmlBoard[i][j].textContent = board[i][j];
         }
     }
+    let completeCounter = 0;
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            if (htmlBoard[i][j].textContent > 0) {
+                htmlBoard[i][j].style.background = "lightslategray";
+                completeCounter++
+            }
+        }
+    }
+    if (completeCounter == 81){
+        console.log("done")
+    }
 }
+
