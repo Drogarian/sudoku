@@ -1,0 +1,48 @@
+body{
+    text-align: center;
+    background: black;
+}
+h1 {
+    color: cornsilk;
+
+}
+table{
+    margin: auto;
+}
+td {
+    background: lightgray;
+    border-radius: 5px;
+    height: 50px;
+    width: 50px;
+}
+td:hover {
+    background: lightslategray;
+}
+
+.vert {
+    width: 1px !important; 
+    background: black;
+}
+
+.horiz > td{
+    height: 1px !important;
+    background: black;
+}
+button {
+    margin: 0.2rem;
+    background: darkkhaki;
+    border-radius: 5px;
+    border: 2px solid darkslategray;
+}
+.difficulty-pop {
+    /* top: 50%;
+    left: 26rem; */
+    background: rgb(148, 145, 145);
+    border-radius: 5px;
+    padding: 10px;
+    transform: translateY(-300%);
+    margin: auto;
+    width: 6rem;
+    pointer-events: none;
+    opacity: 0;
+}

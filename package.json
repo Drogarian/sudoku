@@ -1,0 +1,30 @@
+{
+  "name": "sudoku",
+  "version": "1.0.0",
+  "description": "",
+  "main": "postcss.config.js",
+  "browserslist": [
+    "> 1%",
+    "ie > 9"
+  ],
+  "babel": {
+    "presets": [
+      "env"
+    ]
+  },
+  "scripts": {
+    "postcss:watch": "postcss src_css/style.css --dir public --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "autoprefixer": "^10.4.0",
+    "autoprefixer-core": "^6.0.1",
+    "cssnano": "^5.0.13",
+    "postcss": "^8.4.5",
+    "postcss-cli": "^9.1.0",
+    "postcss-import": "^14.0.2",
+    "postcss-preset-env": "^7.0.2"
+  }
+}
