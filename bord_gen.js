@@ -1,93 +1,95 @@
 
-let g_1_c_1 = document.getElementById("grid-1-cell-1");
-let g_1_c_2 = document.getElementById("grid-1-cell-2");
-let g_1_c_3 = document.getElementById("grid-1-cell-3");
-let g_1_c_4 = document.getElementById("grid-1-cell-4");
-let g_1_c_5 = document.getElementById("grid-1-cell-5");
-let g_1_c_6 = document.getElementById("grid-1-cell-6");
-let g_1_c_7 = document.getElementById("grid-1-cell-7");
-let g_1_c_8 = document.getElementById("grid-1-cell-8");
-let g_1_c_9 = document.getElementById("grid-1-cell-9");
+let htmlBoard = new Array(9).fill("").map(() => new Array(9).fill(""));
 
-let g_2_c_1 = document.getElementById("grid-2-cell-1");
-let g_2_c_2 = document.getElementById("grid-2-cell-2");
-let g_2_c_3 = document.getElementById("grid-2-cell-3");
-let g_2_c_4 = document.getElementById("grid-2-cell-4");
-let g_2_c_5 = document.getElementById("grid-2-cell-5");
-let g_2_c_6 = document.getElementById("grid-2-cell-6");
-let g_2_c_7 = document.getElementById("grid-2-cell-7");
-let g_2_c_8 = document.getElementById("grid-2-cell-8");
-let g_2_c_9 = document.getElementById("grid-2-cell-9");
+htmlBoard[0][0] = document.getElementById("grid-1-cell-1");
+htmlBoard[0][1] = document.getElementById("grid-1-cell-2");
+htmlBoard[0][2] = document.getElementById("grid-1-cell-3");
+htmlBoard[0][3] = document.getElementById("grid-2-cell-1");
+htmlBoard[0][4] = document.getElementById("grid-2-cell-2");
+htmlBoard[0][5] = document.getElementById("grid-2-cell-3");
+htmlBoard[0][6] = document.getElementById("grid-3-cell-1");
+htmlBoard[0][7] = document.getElementById("grid-3-cell-2");
+htmlBoard[0][8] = document.getElementById("grid-3-cell-3");
 
-let g_3_c_1 = document.getElementById("grid-3-cell-1");
-let g_3_c_2 = document.getElementById("grid-3-cell-2");
-let g_3_c_3 = document.getElementById("grid-3-cell-3");
-let g_3_c_4 = document.getElementById("grid-3-cell-4");
-let g_3_c_5 = document.getElementById("grid-3-cell-5");
-let g_3_c_6 = document.getElementById("grid-3-cell-6");
-let g_3_c_7 = document.getElementById("grid-3-cell-7");
-let g_3_c_8 = document.getElementById("grid-3-cell-8");
-let g_3_c_9 = document.getElementById("grid-3-cell-9");
+htmlBoard[1][0] = document.getElementById("grid-1-cell-4");
+htmlBoard[1][1] = document.getElementById("grid-1-cell-5");
+htmlBoard[1][2] = document.getElementById("grid-1-cell-6");
+htmlBoard[1][3] = document.getElementById("grid-2-cell-4");
+htmlBoard[1][4] = document.getElementById("grid-2-cell-5");
+htmlBoard[1][5] = document.getElementById("grid-2-cell-6");
+htmlBoard[1][6] = document.getElementById("grid-3-cell-4");
+htmlBoard[1][7] = document.getElementById("grid-3-cell-5");
+htmlBoard[1][8] = document.getElementById("grid-3-cell-6");
 
-let g_4_c_1 = document.getElementById("grid-4-cell-1");
-let g_4_c_2 = document.getElementById("grid-4-cell-2");
-let g_4_c_3 = document.getElementById("grid-4-cell-3");
-let g_4_c_4 = document.getElementById("grid-4-cell-4");
-let g_4_c_5 = document.getElementById("grid-4-cell-5");
-let g_4_c_6 = document.getElementById("grid-4-cell-6");
-let g_4_c_7 = document.getElementById("grid-4-cell-7");
-let g_4_c_8 = document.getElementById("grid-4-cell-8");
-let g_4_c_9 = document.getElementById("grid-4-cell-9");
+htmlBoard[2][0] = document.getElementById("grid-1-cell-7");
+htmlBoard[2][1] = document.getElementById("grid-1-cell-8");
+htmlBoard[2][2] = document.getElementById("grid-1-cell-9");
+htmlBoard[2][3] = document.getElementById("grid-2-cell-7");
+htmlBoard[2][4] = document.getElementById("grid-2-cell-8");
+htmlBoard[2][5] = document.getElementById("grid-2-cell-9");
+htmlBoard[2][6] = document.getElementById("grid-3-cell-7");
+htmlBoard[2][7] = document.getElementById("grid-3-cell-8");
+htmlBoard[2][8] = document.getElementById("grid-3-cell-9");
 
-let g_5_c_1 = document.getElementById("grid-5-cell-1");
-let g_5_c_2 = document.getElementById("grid-5-cell-2");
-let g_5_c_3 = document.getElementById("grid-5-cell-3");
-let g_5_c_4 = document.getElementById("grid-5-cell-4");
-let g_5_c_5 = document.getElementById("grid-5-cell-5");
-let g_5_c_6 = document.getElementById("grid-5-cell-6");
-let g_5_c_7 = document.getElementById("grid-5-cell-7");
-let g_5_c_8 = document.getElementById("grid-5-cell-8");
-let g_5_c_9 = document.getElementById("grid-5-cell-9");
+htmlBoard[3][0] = document.getElementById("grid-4-cell-1");
+htmlBoard[3][1] = document.getElementById("grid-4-cell-2");
+htmlBoard[3][2] = document.getElementById("grid-4-cell-3");
+htmlBoard[3][3] = document.getElementById("grid-5-cell-1");
+htmlBoard[3][4] = document.getElementById("grid-5-cell-2");
+htmlBoard[3][5] = document.getElementById("grid-5-cell-3");
+htmlBoard[3][6] = document.getElementById("grid-6-cell-1");
+htmlBoard[3][7] = document.getElementById("grid-6-cell-2");
+htmlBoard[3][8] = document.getElementById("grid-6-cell-3");
 
-let g_6_c_1 = document.getElementById("grid-6-cell-1");
-let g_6_c_2 = document.getElementById("grid-6-cell-2");
-let g_6_c_3 = document.getElementById("grid-6-cell-3");
-let g_6_c_4 = document.getElementById("grid-6-cell-4");
-let g_6_c_5 = document.getElementById("grid-6-cell-5");
-let g_6_c_6 = document.getElementById("grid-6-cell-6");
-let g_6_c_7 = document.getElementById("grid-6-cell-7");
-let g_6_c_8 = document.getElementById("grid-6-cell-8");
-let g_6_c_9 = document.getElementById("grid-6-cell-9");
+htmlBoard[4][0] = document.getElementById("grid-4-cell-4");
+htmlBoard[4][1] = document.getElementById("grid-4-cell-5");
+htmlBoard[4][2] = document.getElementById("grid-4-cell-6");
+htmlBoard[4][3] = document.getElementById("grid-5-cell-4");
+htmlBoard[4][4] = document.getElementById("grid-5-cell-5");
+htmlBoard[4][5] = document.getElementById("grid-5-cell-6");
+htmlBoard[4][6] = document.getElementById("grid-6-cell-4");
+htmlBoard[4][7] = document.getElementById("grid-6-cell-5");
+htmlBoard[4][8] = document.getElementById("grid-6-cell-6");
 
-let g_7_c_1 = document.getElementById("grid-7-cell-1");
-let g_7_c_2 = document.getElementById("grid-7-cell-2");
-let g_7_c_3 = document.getElementById("grid-7-cell-3");
-let g_7_c_4 = document.getElementById("grid-7-cell-4");
-let g_7_c_5 = document.getElementById("grid-7-cell-5");
-let g_7_c_6 = document.getElementById("grid-7-cell-6");
-let g_7_c_7 = document.getElementById("grid-7-cell-7");
-let g_7_c_8 = document.getElementById("grid-7-cell-8");
-let g_7_c_9 = document.getElementById("grid-7-cell-9");
+htmlBoard[5][0] = document.getElementById("grid-4-cell-7");
+htmlBoard[5][1] = document.getElementById("grid-4-cell-8");
+htmlBoard[5][2] = document.getElementById("grid-4-cell-9");
+htmlBoard[5][3] = document.getElementById("grid-5-cell-7");
+htmlBoard[5][4] = document.getElementById("grid-5-cell-8");
+htmlBoard[5][5] = document.getElementById("grid-5-cell-9");
+htmlBoard[5][6] = document.getElementById("grid-6-cell-7");
+htmlBoard[5][7] = document.getElementById("grid-6-cell-8");
+htmlBoard[5][8] = document.getElementById("grid-6-cell-9");
 
-let g_8_c_1 = document.getElementById("grid-8-cell-1");
-let g_8_c_2 = document.getElementById("grid-8-cell-2");
-let g_8_c_3 = document.getElementById("grid-8-cell-3");
-let g_8_c_4 = document.getElementById("grid-8-cell-4");
-let g_8_c_5 = document.getElementById("grid-8-cell-5");
-let g_8_c_6 = document.getElementById("grid-8-cell-6");
-let g_8_c_7 = document.getElementById("grid-8-cell-7");
-let g_8_c_8 = document.getElementById("grid-8-cell-8");
-let g_8_c_9 = document.getElementById("grid-8-cell-9");
+htmlBoard[6][0] = document.getElementById("grid-7-cell-1");
+htmlBoard[6][1] = document.getElementById("grid-7-cell-2");
+htmlBoard[6][2] = document.getElementById("grid-7-cell-3");
+htmlBoard[6][3] = document.getElementById("grid-8-cell-1");
+htmlBoard[6][4] = document.getElementById("grid-8-cell-2");
+htmlBoard[6][5] = document.getElementById("grid-8-cell-3");
+htmlBoard[6][6] = document.getElementById("grid-9-cell-1");
+htmlBoard[6][7] = document.getElementById("grid-9-cell-2");
+htmlBoard[6][8] = document.getElementById("grid-9-cell-3");
 
-let g_9_c_1 = document.getElementById("grid-9-cell-1");
-let g_9_c_2 = document.getElementById("grid-9-cell-2");
-let g_9_c_3 = document.getElementById("grid-9-cell-3");
-let g_9_c_4 = document.getElementById("grid-9-cell-4");
-let g_9_c_5 = document.getElementById("grid-9-cell-5");
-let g_9_c_6 = document.getElementById("grid-9-cell-6");
-let g_9_c_7 = document.getElementById("grid-9-cell-7");
-let g_9_c_8 = document.getElementById("grid-9-cell-8");
-let g_9_c_9 = document.getElementById("grid-9-cell-9");
+htmlBoard[7][0] = document.getElementById("grid-7-cell-4");
+htmlBoard[7][1] = document.getElementById("grid-7-cell-5");
+htmlBoard[7][2] = document.getElementById("grid-7-cell-6");
+htmlBoard[7][3] = document.getElementById("grid-8-cell-4");
+htmlBoard[7][4] = document.getElementById("grid-8-cell-5");
+htmlBoard[7][5] = document.getElementById("grid-8-cell-6");
+htmlBoard[7][6] = document.getElementById("grid-9-cell-4");
+htmlBoard[7][7] = document.getElementById("grid-9-cell-5");
+htmlBoard[7][8] = document.getElementById("grid-9-cell-6");
+
+htmlBoard[8][0] = document.getElementById("grid-7-cell-7");
+htmlBoard[8][1] = document.getElementById("grid-7-cell-8");
+htmlBoard[8][2] = document.getElementById("grid-7-cell-9");
+htmlBoard[8][3] = document.getElementById("grid-8-cell-7");
+htmlBoard[8][4] = document.getElementById("grid-8-cell-8");
+htmlBoard[8][5] = document.getElementById("grid-8-cell-9");
+htmlBoard[8][6] = document.getElementById("grid-9-cell-7");
+htmlBoard[8][7] = document.getElementById("grid-9-cell-8");
+htmlBoard[8][8] = document.getElementById("grid-9-cell-9");
 
 var num_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -366,103 +368,16 @@ function giveHint() {
     for (let i = 0; i < 9; i++) {
         brd[i] = originalBoard[i].slice();
     }
-    console.log(brd);
-    // brd = [...originalBoard];
     let hintPos = findShortArr(brd);
-    // console.log(originalBoard === bo);
     originalBoard[hintPos[0]][hintPos[1]] = [...brd[hintPos[0]][hintPos[1]]];
     populateBoard(originalBoard);
 }
 
 
 function populateBoard(board) {
-    g_1_c_1.textContent = board[0][0];
-    g_1_c_2.textContent = board[0][1];
-    g_1_c_3.textContent = board[0][2];
-    g_1_c_4.textContent = board[1][0];
-    g_1_c_5.textContent = board[1][1];
-    g_1_c_6.textContent = board[1][2];
-    g_1_c_7.textContent = board[2][0];
-    g_1_c_8.textContent = board[2][1];
-    g_1_c_9.textContent = board[2][2];
-
-    g_2_c_1.textContent = board[0][3];
-    g_2_c_2.textContent = board[0][4];
-    g_2_c_3.textContent = board[0][5];
-    g_2_c_4.textContent = board[1][3];
-    g_2_c_5.textContent = board[1][4];
-    g_2_c_6.textContent = board[1][5];
-    g_2_c_7.textContent = board[2][3];
-    g_2_c_8.textContent = board[2][4];
-    g_2_c_9.textContent = board[2][5];
-
-    g_3_c_1.textContent = board[0][6];
-    g_3_c_2.textContent = board[0][7];
-    g_3_c_3.textContent = board[0][8];
-    g_3_c_4.textContent = board[1][6];
-    g_3_c_5.textContent = board[1][7];
-    g_3_c_6.textContent = board[1][8];
-    g_3_c_7.textContent = board[2][6];
-    g_3_c_8.textContent = board[2][7];
-    g_3_c_9.textContent = board[2][8];
-
-    g_4_c_1.textContent = board[3][0];
-    g_4_c_2.textContent = board[3][1];
-    g_4_c_3.textContent = board[3][2];
-    g_4_c_4.textContent = board[4][0];
-    g_4_c_5.textContent = board[4][1];
-    g_4_c_6.textContent = board[4][2];
-    g_4_c_7.textContent = board[5][0];
-    g_4_c_8.textContent = board[5][1];
-    g_4_c_9.textContent = board[5][2];
-
-    g_5_c_1.textContent = board[3][3];
-    g_5_c_2.textContent = board[3][4];
-    g_5_c_3.textContent = board[3][5];
-    g_5_c_4.textContent = board[4][3];
-    g_5_c_5.textContent = board[4][4];
-    g_5_c_6.textContent = board[4][5];
-    g_5_c_7.textContent = board[5][3];
-    g_5_c_8.textContent = board[5][4];
-    g_5_c_9.textContent = board[5][5];
-
-    g_6_c_1.textContent = board[3][6];
-    g_6_c_2.textContent = board[3][7];
-    g_6_c_3.textContent = board[3][8];
-    g_6_c_4.textContent = board[4][6];
-    g_6_c_5.textContent = board[4][7];
-    g_6_c_6.textContent = board[4][8];
-    g_6_c_7.textContent = board[5][6];
-    g_6_c_8.textContent = board[5][7];
-    g_6_c_9.textContent = board[5][8];
-
-    g_7_c_1.textContent = board[6][0];
-    g_7_c_2.textContent = board[6][1];
-    g_7_c_3.textContent = board[6][2];
-    g_7_c_4.textContent = board[7][0];
-    g_7_c_5.textContent = board[7][1];
-    g_7_c_6.textContent = board[7][2];
-    g_7_c_7.textContent = board[8][0];
-    g_7_c_8.textContent = board[8][1];
-    g_7_c_9.textContent = board[8][2];
-
-    g_8_c_1.textContent = board[6][3];
-    g_8_c_2.textContent = board[6][4];
-    g_8_c_3.textContent = board[6][5];
-    g_8_c_4.textContent = board[7][3];
-    g_8_c_5.textContent = board[7][4];
-    g_8_c_6.textContent = board[7][5];
-    g_8_c_7.textContent = board[8][3];
-    g_8_c_8.textContent = board[8][4];
-    g_8_c_9.textContent = board[8][5];
-
-    g_9_c_1.textContent = board[6][6];
-    g_9_c_2.textContent = board[6][7];
-    g_9_c_3.textContent = board[6][8];
-    g_9_c_4.textContent = board[7][6];
-    g_9_c_5.textContent = board[7][7];
-    g_9_c_6.textContent = board[7][8];
-    g_9_c_7.textContent = board[8][6];
-    g_9_c_8.textContent = board[8][7];
-    g_9_c_9.textContent = board[8][8];
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            htmlBoard[i][j].textContent = board[i][j];
+        }
+    }
 }
