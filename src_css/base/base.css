@@ -46,3 +46,12 @@ button {
     pointer-events: none;
     opacity: 0;
 }
+.input-selection{
+    position: fixed;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    background: black;
+    border-radius: 5px;
+    pointer-events: none;
+}

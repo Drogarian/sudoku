@@ -93,6 +93,7 @@ htmlBoard[8][8] = document.getElementById("grid-9-cell-9");
 
 var num_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+// builds board with grid 1, 4, and 9 filled
 function generateBoard(){
     var grid_arr = [];
 
@@ -137,7 +138,7 @@ function generateBoard(){
 
 }
 
-
+//  function to solve the board
 function solveBoard(bo) {
     let find = findEmtyCell(bo)
     if (!find) {
@@ -160,6 +161,7 @@ function solveBoard(bo) {
     return false;
 }
 
+//  checks if the number entered is a valid placement on the board
 function validPlacement(bo, num, pos) {
 
     let placeRow = pos[0];
@@ -190,7 +192,7 @@ function validPlacement(bo, num, pos) {
 
 
 
-
+//  Finds the next empty cell with the least amount of options
 function findEmtyCell(bo) {
     for (let i = 0; i < bo.length; i++){
         for (let j = 0; j < bo[i].length; j++) {
@@ -203,7 +205,7 @@ function findEmtyCell(bo) {
     return false;
 }
 
-
+//  provides a list of possible values in a cell
 function listPossibleValues(bo, row, col) {
     let temp_list = [];
     for (let i = 0; i < bo[row].length; i++){
@@ -239,7 +241,7 @@ function listPossibleValues(bo, row, col) {
     return pos_list;
 }
 
-
+//  finds the cell with the least amount of options
 function findShortArr(bo){
     
     let short_pos_row;
@@ -265,6 +267,9 @@ function findShortArr(bo){
 // PROVIDES A GLOBAL ARRAY TO STORE THE ORIGINAL BOARD
 var originalBoard = [];
 
+let boolForEventListner = false;
+let inputSelection = document.getElementById("select-input");
+
 // STARTS THE GAME
 function startNewGame(diff) {
     let brd = generateBoard();
@@ -273,16 +278,42 @@ function startNewGame(diff) {
     originalBoard = [...brd];
     populateBoard(brd);
     const boardEventListner = document.querySelectorAll(".brd-el");
-
-    boardEventListner.forEach(element => {
-        element.addEventListener("click", (e)=>{
-            console.log(element.id);
+    if (boolForEventListner != true) {
+        boolForEventListner = true;
+        boardEventListner.forEach(element => {
+            element.addEventListener("click", (e)=>{
+                cellnumberSelection(element)
+            });
         });
-    });
+    }
+}
+
+// Function to bring up the selection box
+let isBoxDisplayed = false;
+function cellnumberSelection(element) {
+    let cellPos = element.getBoundingClientRect();
+    if (isBoxDisplayed == false){
+        isBoxDisplayed = true;
+        inputSelection.style.opacity = "0.5";
+        inputSelection.style.left =  `${cellPos.left}px`;
+        inputSelection.style.top = `${cellPos.bottom}px`;
+        inputSelection.style.zIndex = "2";
+        inputSelection.style.pointerEvents = "all";
+    } else {
+        isBoxDisplayed = false;
+        inputSelection.style.opacity = "0";
+        inputSelection.style.left =  "0";
+        inputSelection.style.top = "0";
+        inputSelection.style.zIndex = "-1";
+        inputSelection.style.pointerEvents = "none";
+    }
+    
+    
 }
 
 // LETS THE USER SELECT THE DIFFICULTY MAKES THE DIFFICULTY OPTIONS AVAILABLE
 function chooseDificulty() {
+
     let diffChoicePop = document.getElementById("difficulty-options");
     diffChoicePop.style.opacity = '1';
     diffChoicePop.style.pointerEvents = 'all';
