@@ -268,7 +268,7 @@ function findShortArr(bo){
 var originalBoard = [];
 
 let boolForEventListner = false;
-let inputSelection = document.getElementById("select-input");
+const inputSelection = document.getElementById("select-input");
 
 // STARTS THE GAME
 function startNewGame(diff) {
@@ -282,7 +282,13 @@ function startNewGame(diff) {
         boolForEventListner = true;
         boardEventListner.forEach(element => {
             element.addEventListener("click", (e)=>{
-                cellnumberSelection(element)
+                if (element.textContent > 0) {
+                    if (isBoxDisplayed == true) {
+                        closeInputBox();
+                    }
+                    return
+                }
+                openInputBox(element)
             });
         });
     }
@@ -290,26 +296,71 @@ function startNewGame(diff) {
 
 // Function to bring up the selection box
 let isBoxDisplayed = false;
-function cellnumberSelection(element) {
+function openInputBox(element) {
     let cellPos = element.getBoundingClientRect();
     if (isBoxDisplayed == false){
         isBoxDisplayed = true;
-        inputSelection.style.opacity = "0.5";
+        inputSelection.style.opacity = "1";
         inputSelection.style.left =  `${cellPos.left}px`;
         inputSelection.style.top = `${cellPos.bottom}px`;
         inputSelection.style.zIndex = "2";
         inputSelection.style.pointerEvents = "all";
+        insertSelectedNumber(element);
     } else {
-        isBoxDisplayed = false;
-        inputSelection.style.opacity = "0";
-        inputSelection.style.left =  "0";
-        inputSelection.style.top = "0";
-        inputSelection.style.zIndex = "-1";
-        inputSelection.style.pointerEvents = "none";
+        closeInputBox();
     }
-    
+}
+
+//  closes the input box
+function closeInputBox() {
+    isBoxDisplayed = false;
+    inputSelection.style.opacity = "0";
+    inputSelection.style.left =  "0";
+    inputSelection.style.top = "0";
+    inputSelection.style.zIndex = "-1";
+    inputSelection.style.pointerEvents = "none";
     
 }
+
+// Inserts the selected number from the input selection box
+let insert_1 = document.getElementById("input-1")
+let insert_2 = document.getElementById("input-2")
+let insert_3 = document.getElementById("input-3")
+let insert_4 = document.getElementById("input-4")
+let insert_5 = document.getElementById("input-5")
+let insert_6 = document.getElementById("input-6")
+let insert_7 = document.getElementById("input-7")
+let insert_8 = document.getElementById("input-8")
+let insert_9 = document.getElementById("input-9")
+
+
+function insertSelectedNumber(cell) {
+    insert_1.addEventListener("click", addToBoard)
+    insert_2.addEventListener("click", addToBoard)
+    insert_3.addEventListener("click", addToBoard)
+    insert_4.addEventListener("click", addToBoard)
+    insert_5.addEventListener("click", addToBoard)
+    insert_6.addEventListener("click", addToBoard)
+    insert_7.addEventListener("click", addToBoard)
+    insert_8.addEventListener("click", addToBoard)
+    insert_9.addEventListener("click", addToBoard)
+
+    function addToBoard() {
+        cell.textContent = this.textContent;
+        closeInputBox();
+        insert_1.removeEventListener("click", addToBoard)
+        insert_2.removeEventListener("click", addToBoard)
+        insert_3.removeEventListener("click", addToBoard)
+        insert_4.removeEventListener("click", addToBoard)
+        insert_5.removeEventListener("click", addToBoard)
+        insert_6.removeEventListener("click", addToBoard)
+        insert_7.removeEventListener("click", addToBoard)
+        insert_8.removeEventListener("click", addToBoard)
+        insert_9.removeEventListener("click", addToBoard)
+    }
+}
+
+
 
 // LETS THE USER SELECT THE DIFFICULTY MAKES THE DIFFICULTY OPTIONS AVAILABLE
 function chooseDificulty() {

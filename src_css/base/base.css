@@ -51,7 +51,14 @@ button {
     opacity: 0;
     top: 0;
     left: 0;
-    background: black;
+    background: rgba(0, 0, 0, 0.5);
     border-radius: 5px;
     pointer-events: none;
+}
+.input-selection input{
+    margin: 0.2rem;
+    margin-right: 0;
+    background: darkkhaki;
+    border-radius: 5px;
+    border: 2px solid darkslategray;
 }
