@@ -346,6 +346,7 @@ function insertSelectedNumber(cell) {
     insert_9.addEventListener("click", addToBoard)
 
     function addToBoard() {
+        console.log(cell)
         cell.textContent = this.textContent;
         closeInputBox();
         insert_1.removeEventListener("click", addToBoard)
