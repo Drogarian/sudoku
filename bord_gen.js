@@ -1,97 +1,192 @@
 
 let htmlBoard = new Array(9).fill("").map(() => new Array(9).fill(""));
 
-htmlBoard[0][0] = document.getElementById("grid-1-cell-1");
-htmlBoard[0][1] = document.getElementById("grid-1-cell-2");
-htmlBoard[0][2] = document.getElementById("grid-1-cell-3");
-htmlBoard[0][3] = document.getElementById("grid-2-cell-1");
-htmlBoard[0][4] = document.getElementById("grid-2-cell-2");
-htmlBoard[0][5] = document.getElementById("grid-2-cell-3");
-htmlBoard[0][6] = document.getElementById("grid-3-cell-1");
-htmlBoard[0][7] = document.getElementById("grid-3-cell-2");
-htmlBoard[0][8] = document.getElementById("grid-3-cell-3");
+function makehtmlBoardAnArray() {
 
-htmlBoard[1][0] = document.getElementById("grid-1-cell-4");
-htmlBoard[1][1] = document.getElementById("grid-1-cell-5");
-htmlBoard[1][2] = document.getElementById("grid-1-cell-6");
-htmlBoard[1][3] = document.getElementById("grid-2-cell-4");
-htmlBoard[1][4] = document.getElementById("grid-2-cell-5");
-htmlBoard[1][5] = document.getElementById("grid-2-cell-6");
-htmlBoard[1][6] = document.getElementById("grid-3-cell-4");
-htmlBoard[1][7] = document.getElementById("grid-3-cell-5");
-htmlBoard[1][8] = document.getElementById("grid-3-cell-6");
+    htmlBoard[0][0] = document.getElementById("grid-1-cell-1");
+    htmlBoard[0][1] = document.getElementById("grid-1-cell-2");
+    htmlBoard[0][2] = document.getElementById("grid-1-cell-3");
+    htmlBoard[0][3] = document.getElementById("grid-2-cell-1");
+    htmlBoard[0][4] = document.getElementById("grid-2-cell-2");
+    htmlBoard[0][5] = document.getElementById("grid-2-cell-3");
+    htmlBoard[0][6] = document.getElementById("grid-3-cell-1");
+    htmlBoard[0][7] = document.getElementById("grid-3-cell-2");
+    htmlBoard[0][8] = document.getElementById("grid-3-cell-3");
 
-htmlBoard[2][0] = document.getElementById("grid-1-cell-7");
-htmlBoard[2][1] = document.getElementById("grid-1-cell-8");
-htmlBoard[2][2] = document.getElementById("grid-1-cell-9");
-htmlBoard[2][3] = document.getElementById("grid-2-cell-7");
-htmlBoard[2][4] = document.getElementById("grid-2-cell-8");
-htmlBoard[2][5] = document.getElementById("grid-2-cell-9");
-htmlBoard[2][6] = document.getElementById("grid-3-cell-7");
-htmlBoard[2][7] = document.getElementById("grid-3-cell-8");
-htmlBoard[2][8] = document.getElementById("grid-3-cell-9");
+    htmlBoard[1][0] = document.getElementById("grid-1-cell-4");
+    htmlBoard[1][1] = document.getElementById("grid-1-cell-5");
+    htmlBoard[1][2] = document.getElementById("grid-1-cell-6");
+    htmlBoard[1][3] = document.getElementById("grid-2-cell-4");
+    htmlBoard[1][4] = document.getElementById("grid-2-cell-5");
+    htmlBoard[1][5] = document.getElementById("grid-2-cell-6");
+    htmlBoard[1][6] = document.getElementById("grid-3-cell-4");
+    htmlBoard[1][7] = document.getElementById("grid-3-cell-5");
+    htmlBoard[1][8] = document.getElementById("grid-3-cell-6");
 
-htmlBoard[3][0] = document.getElementById("grid-4-cell-1");
-htmlBoard[3][1] = document.getElementById("grid-4-cell-2");
-htmlBoard[3][2] = document.getElementById("grid-4-cell-3");
-htmlBoard[3][3] = document.getElementById("grid-5-cell-1");
-htmlBoard[3][4] = document.getElementById("grid-5-cell-2");
-htmlBoard[3][5] = document.getElementById("grid-5-cell-3");
-htmlBoard[3][6] = document.getElementById("grid-6-cell-1");
-htmlBoard[3][7] = document.getElementById("grid-6-cell-2");
-htmlBoard[3][8] = document.getElementById("grid-6-cell-3");
+    htmlBoard[2][0] = document.getElementById("grid-1-cell-7");
+    htmlBoard[2][1] = document.getElementById("grid-1-cell-8");
+    htmlBoard[2][2] = document.getElementById("grid-1-cell-9");
+    htmlBoard[2][3] = document.getElementById("grid-2-cell-7");
+    htmlBoard[2][4] = document.getElementById("grid-2-cell-8");
+    htmlBoard[2][5] = document.getElementById("grid-2-cell-9");
+    htmlBoard[2][6] = document.getElementById("grid-3-cell-7");
+    htmlBoard[2][7] = document.getElementById("grid-3-cell-8");
+    htmlBoard[2][8] = document.getElementById("grid-3-cell-9");
 
-htmlBoard[4][0] = document.getElementById("grid-4-cell-4");
-htmlBoard[4][1] = document.getElementById("grid-4-cell-5");
-htmlBoard[4][2] = document.getElementById("grid-4-cell-6");
-htmlBoard[4][3] = document.getElementById("grid-5-cell-4");
-htmlBoard[4][4] = document.getElementById("grid-5-cell-5");
-htmlBoard[4][5] = document.getElementById("grid-5-cell-6");
-htmlBoard[4][6] = document.getElementById("grid-6-cell-4");
-htmlBoard[4][7] = document.getElementById("grid-6-cell-5");
-htmlBoard[4][8] = document.getElementById("grid-6-cell-6");
+    htmlBoard[3][0] = document.getElementById("grid-4-cell-1");
+    htmlBoard[3][1] = document.getElementById("grid-4-cell-2");
+    htmlBoard[3][2] = document.getElementById("grid-4-cell-3");
+    htmlBoard[3][3] = document.getElementById("grid-5-cell-1");
+    htmlBoard[3][4] = document.getElementById("grid-5-cell-2");
+    htmlBoard[3][5] = document.getElementById("grid-5-cell-3");
+    htmlBoard[3][6] = document.getElementById("grid-6-cell-1");
+    htmlBoard[3][7] = document.getElementById("grid-6-cell-2");
+    htmlBoard[3][8] = document.getElementById("grid-6-cell-3");
 
-htmlBoard[5][0] = document.getElementById("grid-4-cell-7");
-htmlBoard[5][1] = document.getElementById("grid-4-cell-8");
-htmlBoard[5][2] = document.getElementById("grid-4-cell-9");
-htmlBoard[5][3] = document.getElementById("grid-5-cell-7");
-htmlBoard[5][4] = document.getElementById("grid-5-cell-8");
-htmlBoard[5][5] = document.getElementById("grid-5-cell-9");
-htmlBoard[5][6] = document.getElementById("grid-6-cell-7");
-htmlBoard[5][7] = document.getElementById("grid-6-cell-8");
-htmlBoard[5][8] = document.getElementById("grid-6-cell-9");
+    htmlBoard[4][0] = document.getElementById("grid-4-cell-4");
+    htmlBoard[4][1] = document.getElementById("grid-4-cell-5");
+    htmlBoard[4][2] = document.getElementById("grid-4-cell-6");
+    htmlBoard[4][3] = document.getElementById("grid-5-cell-4");
+    htmlBoard[4][4] = document.getElementById("grid-5-cell-5");
+    htmlBoard[4][5] = document.getElementById("grid-5-cell-6");
+    htmlBoard[4][6] = document.getElementById("grid-6-cell-4");
+    htmlBoard[4][7] = document.getElementById("grid-6-cell-5");
+    htmlBoard[4][8] = document.getElementById("grid-6-cell-6");
 
-htmlBoard[6][0] = document.getElementById("grid-7-cell-1");
-htmlBoard[6][1] = document.getElementById("grid-7-cell-2");
-htmlBoard[6][2] = document.getElementById("grid-7-cell-3");
-htmlBoard[6][3] = document.getElementById("grid-8-cell-1");
-htmlBoard[6][4] = document.getElementById("grid-8-cell-2");
-htmlBoard[6][5] = document.getElementById("grid-8-cell-3");
-htmlBoard[6][6] = document.getElementById("grid-9-cell-1");
-htmlBoard[6][7] = document.getElementById("grid-9-cell-2");
-htmlBoard[6][8] = document.getElementById("grid-9-cell-3");
+    htmlBoard[5][0] = document.getElementById("grid-4-cell-7");
+    htmlBoard[5][1] = document.getElementById("grid-4-cell-8");
+    htmlBoard[5][2] = document.getElementById("grid-4-cell-9");
+    htmlBoard[5][3] = document.getElementById("grid-5-cell-7");
+    htmlBoard[5][4] = document.getElementById("grid-5-cell-8");
+    htmlBoard[5][5] = document.getElementById("grid-5-cell-9");
+    htmlBoard[5][6] = document.getElementById("grid-6-cell-7");
+    htmlBoard[5][7] = document.getElementById("grid-6-cell-8");
+    htmlBoard[5][8] = document.getElementById("grid-6-cell-9");
 
-htmlBoard[7][0] = document.getElementById("grid-7-cell-4");
-htmlBoard[7][1] = document.getElementById("grid-7-cell-5");
-htmlBoard[7][2] = document.getElementById("grid-7-cell-6");
-htmlBoard[7][3] = document.getElementById("grid-8-cell-4");
-htmlBoard[7][4] = document.getElementById("grid-8-cell-5");
-htmlBoard[7][5] = document.getElementById("grid-8-cell-6");
-htmlBoard[7][6] = document.getElementById("grid-9-cell-4");
-htmlBoard[7][7] = document.getElementById("grid-9-cell-5");
-htmlBoard[7][8] = document.getElementById("grid-9-cell-6");
+    htmlBoard[6][0] = document.getElementById("grid-7-cell-1");
+    htmlBoard[6][1] = document.getElementById("grid-7-cell-2");
+    htmlBoard[6][2] = document.getElementById("grid-7-cell-3");
+    htmlBoard[6][3] = document.getElementById("grid-8-cell-1");
+    htmlBoard[6][4] = document.getElementById("grid-8-cell-2");
+    htmlBoard[6][5] = document.getElementById("grid-8-cell-3");
+    htmlBoard[6][6] = document.getElementById("grid-9-cell-1");
+    htmlBoard[6][7] = document.getElementById("grid-9-cell-2");
+    htmlBoard[6][8] = document.getElementById("grid-9-cell-3");
 
-htmlBoard[8][0] = document.getElementById("grid-7-cell-7");
-htmlBoard[8][1] = document.getElementById("grid-7-cell-8");
-htmlBoard[8][2] = document.getElementById("grid-7-cell-9");
-htmlBoard[8][3] = document.getElementById("grid-8-cell-7");
-htmlBoard[8][4] = document.getElementById("grid-8-cell-8");
-htmlBoard[8][5] = document.getElementById("grid-8-cell-9");
-htmlBoard[8][6] = document.getElementById("grid-9-cell-7");
-htmlBoard[8][7] = document.getElementById("grid-9-cell-8");
-htmlBoard[8][8] = document.getElementById("grid-9-cell-9");
+    htmlBoard[7][0] = document.getElementById("grid-7-cell-4");
+    htmlBoard[7][1] = document.getElementById("grid-7-cell-5");
+    htmlBoard[7][2] = document.getElementById("grid-7-cell-6");
+    htmlBoard[7][3] = document.getElementById("grid-8-cell-4");
+    htmlBoard[7][4] = document.getElementById("grid-8-cell-5");
+    htmlBoard[7][5] = document.getElementById("grid-8-cell-6");
+    htmlBoard[7][6] = document.getElementById("grid-9-cell-4");
+    htmlBoard[7][7] = document.getElementById("grid-9-cell-5");
+    htmlBoard[7][8] = document.getElementById("grid-9-cell-6");
+
+    htmlBoard[8][0] = document.getElementById("grid-7-cell-7");
+    htmlBoard[8][1] = document.getElementById("grid-7-cell-8");
+    htmlBoard[8][2] = document.getElementById("grid-7-cell-9");
+    htmlBoard[8][3] = document.getElementById("grid-8-cell-7");
+    htmlBoard[8][4] = document.getElementById("grid-8-cell-8");
+    htmlBoard[8][5] = document.getElementById("grid-8-cell-9");
+    htmlBoard[8][6] = document.getElementById("grid-9-cell-7");
+    htmlBoard[8][7] = document.getElementById("grid-9-cell-8");
+    htmlBoard[8][8] = document.getElementById("grid-9-cell-9");
+    return htmlBoard
+}
+
 
 var num_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
+// LETS THE USER SELECT THE DIFFICULTY MAKES THE DIFFICULTY OPTIONS AVAILABLE
+function chooseDificulty() {
+    makehtmlBoardAnArray();
+    originalBoard = [];
+    userBoard = [];
+    let diffChoicePop = document.getElementById("difficulty-options");
+    diffChoicePop.style.opacity = '1';
+    diffChoicePop.style.pointerEvents = 'all';
+
+    let veryEasyEl = document.getElementById("very-easy");
+    let easyEl = document.getElementById("easy");
+    let mediumEl = document.getElementById("medium");
+    let hardEl = document.getElementById("hard");
+
+    veryEasyEl.addEventListener("click", veryEasyGame);
+    easyEl.addEventListener("click", easyGame);
+    mediumEl.addEventListener("click", mediumGame);
+    hardEl.addEventListener("click", hardGame);
+}
+// FUNCTIONS TO CREATE BOARDS DEPENDING ON USER SELECTION
+function veryEasyGame() {
+    let diffChoicePop = document.getElementById("difficulty-options");
+    diffChoicePop.style.opacity = '0';
+    diffChoicePop.style.pointerEvents = 'none';
+    let veryEasyEl = document.getElementById("very-easy");
+    veryEasyEl.removeEventListener("click", veryEasyGame)
+    startNewGame(1);
+}
+function easyGame() {
+    let diffChoicePop = document.getElementById("difficulty-options");
+    diffChoicePop.style.opacity = '0';
+    diffChoicePop.style.pointerEvents = 'none';
+    let easyEl = document.getElementById("easy");
+    easyEl.removeEventListener("click", easyGame);
+    startNewGame(2);
+}
+function mediumGame() {
+    let diffChoicePop = document.getElementById("difficulty-options");
+    diffChoicePop.style.opacity = '0';
+    diffChoicePop.style.pointerEvents = 'none';
+    let mediumEl = document.getElementById("medium");
+    mediumEl.removeEventListener("click", mediumGame);
+    startNewGame(3);
+}
+function hardGame() {
+    let diffChoicePop = document.getElementById("difficulty-options");
+    diffChoicePop.style.opacity = '0';
+    diffChoicePop.style.pointerEvents = 'none';
+    let hardEl = document.getElementById("hard");
+    hardEl.removeEventListener("click", hardGame);
+    startNewGame(4);
+}
+
+
+// STARTS THE GAME
+function startNewGame(diff) {
+    let brd = generateBoard();
+    solveBoard(brd);
+    removeDiff(diff, brd);
+    originalBoard = [...brd];
+    userBoard = copyArray(brd);
+    populateBoard(brd);
+    const boardEventListner = document.querySelectorAll(".brd-el");
+    if (boolForEventListner != true) {
+        boolForEventListner = true;
+        boardEventListner.forEach(element => {
+            element.addEventListener("click", (e)=>{
+                if (element.textContent > 0) {
+                    if (isBoxDisplayed == true) {
+                        closeInputBox();
+                    }
+                    return
+                }
+                openInputBox(element)
+            });
+        });
+    }
+}
+
+// Copys array without linking because js links everything for some reason that I still need to lean about
+function copyArray(bo) {
+    let newArr = bo;
+    for (let i = 0; i < bo.length; i++) {
+        for (let j = 0; j < bo[0].length; j++) {
+            newArr[i][j] = bo[i][j];
+        }
+    }
+    return newArr
+}
 
 // builds board with grid 1, 4, and 9 filled
 function generateBoard(){
@@ -262,37 +357,61 @@ function findShortArr(bo){
     return [short_pos_row, short_pos_col] 
 }
 
+// Removes cells depending on user difficulty choices
+function removeDiff(diff, bo) {
+    if (diff == 1){
+        diff = 30;
+    } else if (diff == 2) {
+        diff = 50;
+    } else if (diff == 3) {
+        diff = 55;
+    } else if (diff == 4) {
+        diff = 60;
+    }
+
+    for (let i = 0; i < (diff); i++) {
+        let row = Math.floor(Math.random() * 9);
+        let col = Math.floor(Math.random() * 9);
+        if (bo[row][col] == null) {
+            i--
+        }
+        bo[row][col] = null;
+        
+    }
+    populateBoard(bo);
+
+}
+
+// Updates the HTML File with changes made
+function populateBoard(board) {
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            htmlBoard[i][j].style.background = "lightgray";
+            htmlBoard[i][j].textContent = board[i][j];
+        }
+    }
+    let completeCounter = 0;
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            if (htmlBoard[i][j].textContent > 0) {
+                htmlBoard[i][j].style.background = "lightslategray";
+                completeCounter++
+            }
+        }
+    }
+    if (completeCounter == 81){
+        console.log("done")
+    }
+}
 
 
 // PROVIDES A GLOBAL ARRAY TO STORE THE ORIGINAL BOARD
 var originalBoard = [];
+var userBoard = [];
 
 let boolForEventListner = false;
 const inputSelection = document.getElementById("select-input");
 
-// STARTS THE GAME
-function startNewGame(diff) {
-    let brd = generateBoard();
-    solveBoard(brd);
-    removeDiff(diff, brd);
-    originalBoard = [...brd];
-    populateBoard(brd);
-    const boardEventListner = document.querySelectorAll(".brd-el");
-    if (boolForEventListner != true) {
-        boolForEventListner = true;
-        boardEventListner.forEach(element => {
-            element.addEventListener("click", (e)=>{
-                if (element.textContent > 0) {
-                    if (isBoxDisplayed == true) {
-                        closeInputBox();
-                    }
-                    return
-                }
-                openInputBox(element)
-            });
-        });
-    }
-}
 
 // Function to bring up the selection box
 let isBoxDisplayed = false;
@@ -346,8 +465,8 @@ function insertSelectedNumber(cell) {
     insert_9.addEventListener("click", addToBoard)
 
     function addToBoard() {
-        console.log(cell)
         cell.textContent = this.textContent;
+        placeUserInput();
         closeInputBox();
         insert_1.removeEventListener("click", addToBoard)
         insert_2.removeEventListener("click", addToBoard)
@@ -363,79 +482,7 @@ function insertSelectedNumber(cell) {
 
 
 
-// LETS THE USER SELECT THE DIFFICULTY MAKES THE DIFFICULTY OPTIONS AVAILABLE
-function chooseDificulty() {
 
-    let diffChoicePop = document.getElementById("difficulty-options");
-    diffChoicePop.style.opacity = '1';
-    diffChoicePop.style.pointerEvents = 'all';
-
-    let veryEasyEl = document.getElementById("very-easy");
-    let easyEl = document.getElementById("easy");
-    let mediumEl = document.getElementById("medium");
-    let hardEl = document.getElementById("hard");
-
-    veryEasyEl.addEventListener("click", veryEasyGame);
-    easyEl.addEventListener("click", easyGame);
-    mediumEl.addEventListener("click", mediumGame);
-    hardEl.addEventListener("click", hardGame);
-}
-// FUNCTIONS TO CREATE BOARDS DEPENDING ON USER SELECTION
-function veryEasyGame() {
-    let diffChoicePop = document.getElementById("difficulty-options");
-    diffChoicePop.style.opacity = '0';
-    diffChoicePop.style.pointerEvents = 'none';
-    let veryEasyEl = document.getElementById("very-easy");
-    veryEasyEl.removeEventListener("click", veryEasyGame)
-    startNewGame(1);
-}
-function easyGame() {
-    let diffChoicePop = document.getElementById("difficulty-options");
-    diffChoicePop.style.opacity = '0';
-    diffChoicePop.style.pointerEvents = 'none';
-    let easyEl = document.getElementById("easy");
-    easyEl.removeEventListener("click", easyGame);
-    startNewGame(2);
-}
-function mediumGame() {
-    let diffChoicePop = document.getElementById("difficulty-options");
-    diffChoicePop.style.opacity = '0';
-    diffChoicePop.style.pointerEvents = 'none';
-    let mediumEl = document.getElementById("medium");
-    mediumEl.removeEventListener("click", mediumGame);
-    startNewGame(3);
-}
-function hardGame() {
-    let diffChoicePop = document.getElementById("difficulty-options");
-    diffChoicePop.style.opacity = '0';
-    diffChoicePop.style.pointerEvents = 'none';
-    let hardEl = document.getElementById("hard");
-    hardEl.removeEventListener("click", hardGame);
-    startNewGame(4);
-}
-function removeDiff(diff, bo) {
-    if (diff == 1){
-        diff = 45;
-    } else if (diff == 2) {
-        diff = 50;
-    } else if (diff == 3) {
-        diff = 55;
-    } else if (diff == 4) {
-        diff = 60;
-    }
-
-    for (let i = 0; i < (diff); i++) {
-        let row = Math.floor(Math.random() * 9);
-        let col = Math.floor(Math.random() * 9);
-        if (bo[row][col] == null) {
-            i--
-        }
-        bo[row][col] = null;
-        
-    }
-    populateBoard(bo);
-
-}
 // FOR THE SOLVE BUTTON
 function solveCurrentGame() {
     solveBoard(originalBoard);
@@ -456,25 +503,16 @@ function giveHint() {
     populateBoard(originalBoard);
 }
 
-// Updates the HTML File with changes made
-function populateBoard(board) {
-    for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-            htmlBoard[i][j].style.background = "lightgray";
-            htmlBoard[i][j].textContent = board[i][j];
-        }
-    }
-    let completeCounter = 0;
-    for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-            if (htmlBoard[i][j].textContent > 0) {
-                htmlBoard[i][j].style.background = "lightslategray";
-                completeCounter++
+function placeUserInput() {
+    let tempBoard = makehtmlBoardAnArray();
+    for (let i =0; i < 9; i++) {
+        for (let j = 0; j < 9; j++){
+            if (tempBoard[i][j].textContent != userBoard[i][j]){
+                if (tempBoard[i][j].textContent != "") {
+                    userBoard[i][j] = tempBoard[i][j].textContent;
+                    populateBoard(userBoard)
+                }
             }
         }
     }
-    if (completeCounter == 81){
-        console.log("done")
-    }
 }
-
