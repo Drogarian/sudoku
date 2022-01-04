@@ -99,7 +99,15 @@ function makehtmlBoardAnArray() {
 var num_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 // LETS THE USER SELECT THE DIFFICULTY MAKES THE DIFFICULTY OPTIONS AVAILABLE
+
+let firstGame = true;
+
 function chooseDificulty() {
+    if (firstGame){    
+        firstGame = false;
+    } else {
+        closeInputBox()
+    };
     makehtmlBoardAnArray();
     originalBoard = [];
     userBoard = [];
@@ -153,28 +161,40 @@ function hardGame() {
 
 
 // STARTS THE GAME
+let boolForEventListner = false;
+let isBoxDisplayed = false;
+
 function startNewGame(diff) {
     let brd = generateBoard();
     solveBoard(brd);
     removeDiff(diff, brd);
-    originalBoard = [...brd];
+    originalBoard = copyArray(brd);
     userBoard = copyArray(brd);
     populateBoard(brd);
-    const boardEventListner = document.querySelectorAll(".brd-el");
-    if (boolForEventListner != true) {
+    cellEventListner();
+}
+
+let boardEventListner;
+function cellEventListner() {
+    boardEventListner = "";
+    boardEventListner = document.querySelectorAll(".brd-el");
+    if (!boolForEventListner) {
         boolForEventListner = true;
         boardEventListner.forEach(element => {
-            element.addEventListener("click", (e)=>{
-                if (element.textContent > 0) {
-                    if (isBoxDisplayed == true) {
-                        closeInputBox();
-                    }
-                    return
-                }
-                openInputBox(element)
-            });
+            element.addEventListener("click", boardEventListnerFunction);
         });
     }
+}
+
+function boardEventListnerFunction(element) {
+    if (this.textContent > 0) {
+        if (isBoxDisplayed) {
+            closeInputBox();
+        }
+        return
+    }
+    let cellToChange = this.id
+    openInputBox(cellToChange);
 }
 
 // Copys array without linking because js links everything for some reason that I still need to lean about
@@ -409,39 +429,12 @@ function populateBoard(board) {
 var originalBoard = [];
 var userBoard = [];
 
-let boolForEventListner = false;
+
 const inputSelection = document.getElementById("select-input");
 
 
 // Function to bring up the selection box
-let isBoxDisplayed = false;
-function openInputBox(element) {
-    let cellPos = element.getBoundingClientRect();
-    if (isBoxDisplayed == false){
-        isBoxDisplayed = true;
-        inputSelection.style.opacity = "1";
-        inputSelection.style.left =  `${cellPos.left}px`;
-        inputSelection.style.top = `${cellPos.bottom}px`;
-        inputSelection.style.zIndex = "2";
-        inputSelection.style.pointerEvents = "all";
-        insertSelectedNumber(element);
-    } else {
-        closeInputBox();
-    }
-}
 
-//  closes the input box
-function closeInputBox() {
-    isBoxDisplayed = false;
-    inputSelection.style.opacity = "0";
-    inputSelection.style.left =  "0";
-    inputSelection.style.top = "0";
-    inputSelection.style.zIndex = "-1";
-    inputSelection.style.pointerEvents = "none";
-    
-}
-
-// Inserts the selected number from the input selection box
 let insert_1 = document.getElementById("input-1")
 let insert_2 = document.getElementById("input-2")
 let insert_3 = document.getElementById("input-3")
@@ -452,34 +445,76 @@ let insert_7 = document.getElementById("input-7")
 let insert_8 = document.getElementById("input-8")
 let insert_9 = document.getElementById("input-9")
 
-
-function insertSelectedNumber(cell) {
-    insert_1.addEventListener("click", addToBoard)
-    insert_2.addEventListener("click", addToBoard)
-    insert_3.addEventListener("click", addToBoard)
-    insert_4.addEventListener("click", addToBoard)
-    insert_5.addEventListener("click", addToBoard)
-    insert_6.addEventListener("click", addToBoard)
-    insert_7.addEventListener("click", addToBoard)
-    insert_8.addEventListener("click", addToBoard)
-    insert_9.addEventListener("click", addToBoard)
-
-    function addToBoard() {
-        cell.textContent = this.textContent;
-        placeUserInput();
+function openInputBox(cellToChange) {
+    let cellPos = document.getElementById(`${cellToChange}`).getBoundingClientRect();
+    if (!isBoxDisplayed){
+        isBoxDisplayed = true;
+        inputSelection.style.opacity = "1";
+        inputSelection.style.left =  `${cellPos.left}px`;
+        inputSelection.style.top = `${cellPos.bottom}px`;
+        inputSelection.style.zIndex = "2";
+        inputSelection.style.pointerEvents = "all";
+        
+        insertSelectedNumber(cellToChange);
+    } else {
         closeInputBox();
-        insert_1.removeEventListener("click", addToBoard)
-        insert_2.removeEventListener("click", addToBoard)
-        insert_3.removeEventListener("click", addToBoard)
-        insert_4.removeEventListener("click", addToBoard)
-        insert_5.removeEventListener("click", addToBoard)
-        insert_6.removeEventListener("click", addToBoard)
-        insert_7.removeEventListener("click", addToBoard)
-        insert_8.removeEventListener("click", addToBoard)
-        insert_9.removeEventListener("click", addToBoard)
+        // boardEventListner.forEach(element => {
+        //     element.removeEventListener("click", boardEventListnerFunction)
+        // });
+        // boolForEventListner = false;
+        // cellEventListner();
     }
 }
 
+//  closes the input box
+function closeInputBox() {
+    isBoxDisplayed = false;
+    inputSelection.style.opacity = "0";
+    // inputSelection.style.left =  "0";
+    // inputSelection.style.top = "0";
+    // inputSelection.style.zIndex = "-1";
+    inputSelection.style.pointerEvents = "none";
+    placeUserInput();
+    
+}
+
+// Inserts the selected number from the input selection box
+function insertSelectedNumber(cell) {
+    insert_1.addEventListener("click", addToBoard);
+    insert_2.addEventListener("click", addToBoard);
+    insert_3.addEventListener("click", addToBoard);
+    insert_4.addEventListener("click", addToBoard);
+    insert_5.addEventListener("click", addToBoard);
+    insert_6.addEventListener("click", addToBoard);
+    insert_7.addEventListener("click", addToBoard);
+    insert_8.addEventListener("click", addToBoard);
+    insert_9.addEventListener("click", addToBoard);
+    let cellCheck = document.getElementById(`${cell}`).getBoundingClientRect();
+    let inputCheck = inputSelection.getBoundingClientRect();
+    function addToBoard() {
+        cellCheck = document.getElementById(`${cell}`).getBoundingClientRect();
+        inputCheck = inputSelection.getBoundingClientRect();
+        if (cellCheck.left == inputCheck.left && cellCheck.bottom == inputCheck.top) {
+            document.getElementById(`${cell}`).textContent = this.textContent;
+            placeUserInput();
+            removeEventListenerAddToBoard();
+        }
+        
+        // removeEventListenerAddToBoard();
+        closeInputBox();
+    }
+    function removeEventListenerAddToBoard() {
+        insert_1.removeEventListener("click", addToBoard);
+        insert_2.removeEventListener("click", addToBoard);
+        insert_3.removeEventListener("click", addToBoard);
+        insert_4.removeEventListener("click", addToBoard);
+        insert_5.removeEventListener("click", addToBoard);
+        insert_6.removeEventListener("click", addToBoard);
+        insert_7.removeEventListener("click", addToBoard);
+        insert_8.removeEventListener("click", addToBoard);
+        insert_9.removeEventListener("click", addToBoard);
+    }
+}
 
 
 
