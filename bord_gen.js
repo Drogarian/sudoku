@@ -166,10 +166,34 @@ let isBoxDisplayed = false;
 
 function startNewGame(diff) {
     let brd = generateBoard();
+    originalBoard = copyArray(brd);
+    userBoard = copyArray(brd);
     solveBoard(brd);
     removeDiff(diff, brd);
     originalBoard = copyArray(brd);
     userBoard = copyArray(brd);
+    let temp = makehtmlBoardAnArray();
+    for (let i = 0; i < 9; i++) {
+        for ( let j = 0; j < 9; j++) {
+            temp[i][j].style.backgroundColor = "lightgray";
+            temp[i][j].addEventListener("mouseover", function(event) {
+                if (event.target.textContent == originalBoard[i][j]) {
+                    event.target.style.backgroundColor = "lightslategray"
+                } else {
+                    event.target.style.backgroundColor = "rgb(154, 187, 223)";
+                }
+            });
+            temp[i][j].addEventListener("mouseout", function(event) {
+                if (event.target.textContent == originalBoard[i][j]) {
+                    event.target.style.backgroundColor = "lightslategray"
+                } else if (event.target.textContent > 0) {
+                    event.target.style.backgroundColor = "rgb(154, 187, 223)"
+                } else {
+                    event.target.style.backgroundColor = "lightgray"
+                }
+            })
+        }
+    }
     populateBoard(brd);
     cellEventListner();
 }
@@ -199,11 +223,9 @@ function boardEventListnerFunction(element) {
 
 // Copys array without linking because js links everything for some reason that I still need to lean about
 function copyArray(bo) {
-    let newArr = bo;
+    let newArr = [...bo];
     for (let i = 0; i < bo.length; i++) {
-        for (let j = 0; j < bo[0].length; j++) {
-            newArr[i][j] = bo[i][j];
-        }
+        newArr[i] = bo[i].slice();
     }
     return newArr
 }
@@ -358,7 +380,6 @@ function listPossibleValues(bo, row, col) {
 
 //  finds the cell with the least amount of options
 function findShortArr(bo){
-    
     let short_pos_row;
     let short_pos_col;
     let short_len = 9;
@@ -406,7 +427,7 @@ function removeDiff(diff, bo) {
 function populateBoard(board) {
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
-            htmlBoard[i][j].style.background = "lightgray";
+            // htmlBoard[i][j].style.background = "lightgray";
             htmlBoard[i][j].textContent = board[i][j];
         }
     }
@@ -414,7 +435,9 @@ function populateBoard(board) {
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
             if (htmlBoard[i][j].textContent > 0) {
-                htmlBoard[i][j].style.background = "lightslategray";
+                if (htmlBoard[i][j].textContent == originalBoard[i][j]) {
+                    htmlBoard[i][j].style.background = "lightslategray";
+                }
                 completeCounter++
             }
         }
@@ -458,11 +481,6 @@ function openInputBox(cellToChange) {
         insertSelectedNumber(cellToChange);
     } else {
         closeInputBox();
-        // boardEventListner.forEach(element => {
-        //     element.removeEventListener("click", boardEventListnerFunction)
-        // });
-        // boolForEventListner = false;
-        // cellEventListner();
     }
 }
 
@@ -470,9 +488,6 @@ function openInputBox(cellToChange) {
 function closeInputBox() {
     isBoxDisplayed = false;
     inputSelection.style.opacity = "0";
-    // inputSelection.style.left =  "0";
-    // inputSelection.style.top = "0";
-    // inputSelection.style.zIndex = "-1";
     inputSelection.style.pointerEvents = "none";
     placeUserInput();
     
@@ -495,12 +510,18 @@ function insertSelectedNumber(cell) {
         cellCheck = document.getElementById(`${cell}`).getBoundingClientRect();
         inputCheck = inputSelection.getBoundingClientRect();
         if (cellCheck.left == inputCheck.left && cellCheck.bottom == inputCheck.top) {
-            document.getElementById(`${cell}`).textContent = this.textContent;
+            if (usePen){
+                document.getElementById(`${cell}`).textContent = this.textContent;
+                document.getElementById(`${cell}`).style.background = "rgb(154, 187, 223)";
+            }else if (usePencil) {
+                console.log("Pencil Used")
+            } else if (useTemp) {
+                console.log("Temp Used")
+            }
+            
             placeUserInput();
             removeEventListenerAddToBoard();
         }
-        
-        // removeEventListenerAddToBoard();
         closeInputBox();
     }
     function removeEventListenerAddToBoard() {
@@ -526,16 +547,26 @@ function solveCurrentGame() {
 
 // FOR THE HINT BUTTON
 function giveHint() {
-    let brd = originalBoard.slice();
+    let temp = makehtmlBoardAnArray();
+    let brd = new Array(9).fill(null).map(() => new Array(9).fill(null));
     for (let i = 0; i < 9; i++) {
-        brd[i] = originalBoard[i].slice();
+        for (let j = 0; j < 9; j++) {
+            if (temp[i][j].textContent == "") {
+                brd[i][j] = null;
+            } else {
+                brd[i][j] = Number(temp[i][j].textContent);
+            }
+        }
     }
+    // for (let i = 0; i < 9; i++) {
+    //     brd[i] = originalBoard[i].slice();
+    // }
     let hintPos = findShortArr(brd);
-    originalBoard[hintPos[0]][hintPos[1]] = [...brd[hintPos[0]][hintPos[1]]];
-    if (originalBoard[hintPos[0]][hintPos[1]].length == 1) {
-        originalBoard[hintPos[0]][hintPos[1]] = originalBoard[hintPos[0]][hintPos[1]][0]
+    userBoard[hintPos[0]][hintPos[1]] = [...brd[hintPos[0]][hintPos[1]]];
+    if (userBoard[hintPos[0]][hintPos[1]].length == 1) {
+        userBoard[hintPos[0]][hintPos[1]] = userBoard[hintPos[0]][hintPos[1]][0]
     }
-    populateBoard(originalBoard);
+    populateBoard(userBoard);
 }
 
 function placeUserInput() {
@@ -543,11 +574,47 @@ function placeUserInput() {
     for (let i =0; i < 9; i++) {
         for (let j = 0; j < 9; j++){
             if (tempBoard[i][j].textContent != userBoard[i][j]){
-                if (tempBoard[i][j].textContent != "") {
-                    userBoard[i][j] = tempBoard[i][j].textContent;
-                    populateBoard(userBoard)
-                }
+                // if (tempBoard[i][j].textContent != "") {
+                    if (usePen){
+                        userBoard[i][j] = tempBoard[i][j].textContent;
+                        populateBoard(userBoard)
+                    }else if (usePencil) {
+                        console.log("Pencil Used")
+                    } else if (useTemp) {
+                        console.log("Temp Used")
+                    }
+                // }
             }
         }
     }
+}
+
+const penEl = document.getElementById("pen-permanent");
+let usePen = true;
+penEl.addEventListener("click", penFunction);
+
+const pencilEl = document.getElementById("pencil-arr");
+let usePencil = false;
+pencilEl.addEventListener("click", pencilFunction);
+
+const tempEl = document.getElementById("temp-arr");
+let useTemp = false;
+tempEl.addEventListener("click", tempFunction);
+
+function penFunction() {
+    usePen = true;
+    usePencil = false;
+    useTemp = false;
+}
+
+function pencilFunction() {
+    usePen = false;
+    usePencil = true;
+    useTemp = false;
+}
+
+function tempFunction() {
+    usePen = false;
+    usePencil = false;
+    useTemp = true;
 }

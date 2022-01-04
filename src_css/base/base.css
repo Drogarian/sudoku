@@ -16,9 +16,9 @@ td {
     height: 50px;
     width: 50px;
 }
-td:hover {
-    background: lightslategray;
-}
+/* td:hover {
+    background: rgb(154, 187, 223);
+} */
 
 .vert {
     width: 1px !important; 
