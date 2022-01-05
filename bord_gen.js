@@ -108,8 +108,9 @@ function chooseDificulty() {
     } else {
         closeInputBox()
     };
+    console.log("a")
     makehtmlBoardAnArray();
-    originalBoard = [];
+    originalBoard = new Array(9).fill("").map(() => new Array(9).fill(""));
     userBoard = [];
     let diffChoicePop = document.getElementById("difficulty-options");
     diffChoicePop.style.opacity = '1';
@@ -125,6 +126,7 @@ function chooseDificulty() {
     mediumEl.addEventListener("click", mediumGame);
     hardEl.addEventListener("click", hardGame);
 }
+
 // FUNCTIONS TO CREATE BOARDS DEPENDING ON USER SELECTION
 function veryEasyGame() {
     let diffChoicePop = document.getElementById("difficulty-options");
@@ -159,7 +161,6 @@ function hardGame() {
     startNewGame(4);
 }
 
-
 // STARTS THE GAME
 let boolForEventListner = false;
 let isBoxDisplayed = false;
@@ -177,14 +178,14 @@ function startNewGame(diff) {
         for ( let j = 0; j < 9; j++) {
             temp[i][j].style.backgroundColor = "lightgray";
             temp[i][j].addEventListener("mouseover", function(event) {
-                if (event.target.textContent == originalBoard[i][j]) {
+                if (event.target.textContent == originalBoard[i][j] && originalBoard[i][j] != "") {
                     event.target.style.backgroundColor = "lightslategray"
                 } else {
                     event.target.style.backgroundColor = "rgb(154, 187, 223)";
                 }
             });
             temp[i][j].addEventListener("mouseout", function(event) {
-                if (event.target.textContent == originalBoard[i][j]) {
+                if (event.target.textContent == originalBoard[i][j] && originalBoard[i][j] != "") {
                     event.target.style.backgroundColor = "lightslategray"
                 } else if (event.target.textContent > 0) {
                     event.target.style.backgroundColor = "rgb(154, 187, 223)"
@@ -206,11 +207,12 @@ function cellEventListner() {
         boolForEventListner = true;
         boardEventListner.forEach(element => {
             element.addEventListener("click", boardEventListnerFunction);
+            // element.removeEventListener("click", boardEventListnerFunction);
         });
     }
 }
 
-function boardEventListnerFunction(element) {
+function boardEventListnerFunction() {
     if (this.textContent > 0) {
         if (isBoxDisplayed) {
             closeInputBox();
@@ -261,15 +263,15 @@ function generateBoard(){
     };
 
     let brd = [];
-    brd[0] = grid_0.slice(0, 3).concat([null, null, null, null, null, null]);
-    brd[1] = grid_0.slice(3, 6).concat([null, null, null, null, null, null]);
-    brd[2] = grid_0.slice(6).concat([null, null, null, null, null, null]);
-    brd[3] = [].concat([null, null, null]).concat(grid_4.slice(0, 3)).concat([null, null, null]);
-    brd[4] = [].concat([null, null, null]).concat(grid_4.slice(3, 6)).concat([null, null, null]);
-    brd[5] = [].concat([null, null, null]).concat(grid_4.slice(6)).concat([null, null, null]);
-    brd[6] = [].concat([null, null, null, null, null, null]).concat(grid_8.slice(0, 3));
-    brd[7] = [].concat([null, null, null, null, null, null]).concat(grid_8.slice(3, 6));
-    brd[8] = [].concat([null, null, null, null, null, null]).concat(grid_8.slice(6));
+    brd[0] = grid_0.slice(0, 3).concat(["", "", "", "", "", ""]);
+    brd[1] = grid_0.slice(3, 6).concat(["", "", "", "", "", ""]);
+    brd[2] = grid_0.slice(6).concat(["", "", "", "", "", ""]);
+    brd[3] = [].concat(["", "", ""]).concat(grid_4.slice(0, 3)).concat(["", "", ""]);
+    brd[4] = [].concat(["", "", ""]).concat(grid_4.slice(3, 6)).concat(["", "", ""]);
+    brd[5] = [].concat(["", "", ""]).concat(grid_4.slice(6)).concat(["", "", ""]);
+    brd[6] = [].concat(["", "", "", "", "", ""]).concat(grid_8.slice(0, 3));
+    brd[7] = [].concat(["", "", "", "", "", ""]).concat(grid_8.slice(3, 6));
+    brd[8] = [].concat(["", "", "", "", "", ""]).concat(grid_8.slice(6));
 
     return brd
 
@@ -291,7 +293,7 @@ function solveBoard(bo) {
             if (solveBoard(bo)) {
                 return true
             } else {
-                bo[row][col] = null;
+                bo[row][col] = "";
             }
         }
     }
@@ -333,7 +335,7 @@ function validPlacement(bo, num, pos) {
 function findEmtyCell(bo) {
     for (let i = 0; i < bo.length; i++){
         for (let j = 0; j < bo[i].length; j++) {
-            if (bo[i][j] == null || bo[i][j].constructor.name == 'Array') {
+            if (bo[i][j] == "" || bo[i][j].constructor.name == 'Array') {
                 return findShortArr(bo);   // use to solve from cells with least choices
                 // return [i, j]  // Use to solve row for row
             }
@@ -346,12 +348,12 @@ function findEmtyCell(bo) {
 function listPossibleValues(bo, row, col) {
     let temp_list = [];
     for (let i = 0; i < bo[row].length; i++){
-        if (bo[row][i] != null){
+        if (bo[row][i] != ""){
             temp_list.push(bo[row][i]);
         } 
     }
     for (let i = 0; i < bo.length; i++){
-            if (bo[i][col] != null){
+            if (bo[i][col] != ""){
                 temp_list.push(bo[i][col]);
             }
         
@@ -362,7 +364,7 @@ function listPossibleValues(bo, row, col) {
     
     for (let i = grid_start_row; i < grid_start_row + 3; i++) {
         for (let x = grid_start_col; x < grid_start_col + 3; x++) {
-            if (bo[i][x] != null) {
+            if (bo[i][x] != "") {
                 temp_list.push(bo[i][x]);
             }
         }
@@ -385,7 +387,7 @@ function findShortArr(bo){
     let short_len = 9;
     for (let i = 0; i < bo[0].length; i++) {
         for (let x = 0; x < bo[0].length; x++) {
-            if (bo[i][x] == null || bo[i][x].constructor.name == 'Array'){
+            if (bo[i][x] == "" || bo[i][x].constructor.name == 'Array'){
                 bo[i][x] = listPossibleValues(bo, i, x);
                 if (bo[i][x].length < short_len) {
                     short_pos_row = i;
@@ -413,10 +415,10 @@ function removeDiff(diff, bo) {
     for (let i = 0; i < (diff); i++) {
         let row = Math.floor(Math.random() * 9);
         let col = Math.floor(Math.random() * 9);
-        if (bo[row][col] == null) {
+        if (bo[row][col] == "") {
             i--
         }
-        bo[row][col] = null;
+        bo[row][col] = "";
         
     }
     populateBoard(bo);
@@ -489,8 +491,7 @@ function closeInputBox() {
     isBoxDisplayed = false;
     inputSelection.style.opacity = "0";
     inputSelection.style.pointerEvents = "none";
-    placeUserInput();
-    
+    // placeUserInput();
 }
 
 // Inserts the selected number from the input selection box
@@ -504,15 +505,16 @@ function insertSelectedNumber(cell) {
     insert_7.addEventListener("click", addToBoard);
     insert_8.addEventListener("click", addToBoard);
     insert_9.addEventListener("click", addToBoard);
-    let cellCheck = document.getElementById(`${cell}`).getBoundingClientRect();
+    let activeCell = document.getElementById(`${cell}`);
+    let cellCheck = activeCell.getBoundingClientRect();
     let inputCheck = inputSelection.getBoundingClientRect();
     function addToBoard() {
-        cellCheck = document.getElementById(`${cell}`).getBoundingClientRect();
+        cellCheck = activeCell.getBoundingClientRect();
         inputCheck = inputSelection.getBoundingClientRect();
-        if (cellCheck.left == inputCheck.left && cellCheck.bottom == inputCheck.top) {
+        if (cellCheck.left == inputCheck.left && Math.round(cellCheck.bottom) == Math.round(inputCheck.top)) {
             if (usePen){
-                document.getElementById(`${cell}`).textContent = this.textContent;
-                document.getElementById(`${cell}`).style.background = "rgb(154, 187, 223)";
+                activeCell.textContent = this.textContent;
+                activeCell.style.background = "rgb(154, 187, 223)";
             }else if (usePencil) {
                 console.log("Pencil Used")
             } else if (useTemp) {
@@ -548,11 +550,11 @@ function solveCurrentGame() {
 // FOR THE HINT BUTTON
 function giveHint() {
     let temp = makehtmlBoardAnArray();
-    let brd = new Array(9).fill(null).map(() => new Array(9).fill(null));
+    let brd = new Array(9).fill("").map(() => new Array(9).fill(""));
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
             if (temp[i][j].textContent == "") {
-                brd[i][j] = null;
+                brd[i][j] = "";
             } else {
                 brd[i][j] = Number(temp[i][j].textContent);
             }
