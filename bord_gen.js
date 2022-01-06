@@ -108,7 +108,6 @@ function chooseDificulty() {
     } else {
         closeInputBox()
     };
-    console.log("a")
     makehtmlBoardAnArray();
     originalBoard = new Array(9).fill("").map(() => new Array(9).fill(""));
     userBoard = [];
@@ -183,10 +182,13 @@ function startNewGame(diff) {
                 } else {
                     event.target.style.backgroundColor = "rgb(154, 187, 223)";
                 }
+                
             });
             temp[i][j].addEventListener("mouseout", function(event) {
                 if (event.target.textContent == originalBoard[i][j] && originalBoard[i][j] != "") {
                     event.target.style.backgroundColor = "lightslategray"
+                } else if (!(validPlacement(userBoard, Number(event.originalTarget.textContent), getInputIndex(event.originalTarget))) && event.target.textContent != "") {
+                    event.target.style.backgroundColor = "red";
                 } else if (event.target.textContent > 0) {
                     event.target.style.backgroundColor = "rgb(154, 187, 223)"
                 } else {
@@ -213,14 +215,14 @@ function cellEventListner() {
 }
 
 function boardEventListnerFunction() {
-    if (this.textContent > 0) {
+    let clickedCell = getInputIndex(this);
+    if (originalBoard[clickedCell[0]][clickedCell[1]] > 0) {
         if (isBoxDisplayed) {
             closeInputBox();
         }
         return
     }
-    let cellToChange = this.id
-    openInputBox(cellToChange);
+    openInputBox(this.id);
 }
 
 // Copys array without linking because js links everything for some reason that I still need to lean about
@@ -319,9 +321,9 @@ function validPlacement(bo, num, pos) {
     let grid_start_row = placeRow - placeRow % 3;
     let grid_start_col = placeCol - placeCol % 3;
     
-    for (let i = grid_start_row; i < grid_start_row + 3; i++) {
-        for (let j = grid_start_col; j < grid_start_col + 3; j++) {
-            if (bo[i][j] === num && [i, j] != pos) {
+    for (let i = grid_start_row; i < (grid_start_row + 3); i++) {
+        for (let j = grid_start_col; j < (grid_start_col + 3); j++) {
+            if (bo[i][j] === num && i != pos[0] && j != pos[1]) {
                 return false;
             }
         }
@@ -469,6 +471,7 @@ let insert_6 = document.getElementById("input-6")
 let insert_7 = document.getElementById("input-7")
 let insert_8 = document.getElementById("input-8")
 let insert_9 = document.getElementById("input-9")
+let clearEl = document.getElementById("clear-el")
 
 function openInputBox(cellToChange) {
     let cellPos = document.getElementById(`${cellToChange}`).getBoundingClientRect();
@@ -491,7 +494,6 @@ function closeInputBox() {
     isBoxDisplayed = false;
     inputSelection.style.opacity = "0";
     inputSelection.style.pointerEvents = "none";
-    // placeUserInput();
 }
 
 // Inserts the selected number from the input selection box
@@ -505,6 +507,7 @@ function insertSelectedNumber(cell) {
     insert_7.addEventListener("click", addToBoard);
     insert_8.addEventListener("click", addToBoard);
     insert_9.addEventListener("click", addToBoard);
+    clearEl.addEventListener("click", addToBoard);
     let activeCell = document.getElementById(`${cell}`);
     let cellCheck = activeCell.getBoundingClientRect();
     let inputCheck = inputSelection.getBoundingClientRect();
@@ -513,15 +516,35 @@ function insertSelectedNumber(cell) {
         inputCheck = inputSelection.getBoundingClientRect();
         if (cellCheck.left == inputCheck.left && Math.round(cellCheck.bottom) == Math.round(inputCheck.top)) {
             if (usePen){
-                activeCell.textContent = this.textContent;
-                activeCell.style.background = "rgb(154, 187, 223)";
+                if (!(this.textContent == "Clear")) {
+                    let currentIndex = getInputIndex(activeCell)
+                    let isValid =  validPlacement(userBoard, Number(this.textContent), currentIndex);
+                    activeCell.textContent = this.textContent;
+                    if (isValid) {
+                        activeCell.style.background = "rgb(154, 187, 223)";
+                    } else {
+                        activeCell.style.background = "red";
+                    }
+                } else {
+                    activeCell.textContent = "";
+                    activeCell.style.background = "lightgrey";
+                }
+                placeUserInput();
             }else if (usePencil) {
-                console.log("Pencil Used")
+                if (activeCell.childNodes.length == 0){
+                    console.log("a")
+                    let pencilP = document.createElement("p")
+                    pencilP.textContent = this.textContent
+                    activeCell.appendChild(pencilP)
+                } else {
+                    console.log(activeCell.childNodes[0])
+                    activeCell.childNodes[0].textContent = `${activeCell.childNodes[0].textContent},${this.textContent}`;
+                }
             } else if (useTemp) {
                 console.log("Temp Used")
             }
             
-            placeUserInput();
+            
             removeEventListenerAddToBoard();
         }
         closeInputBox();
@@ -539,6 +562,17 @@ function insertSelectedNumber(cell) {
     }
 }
 
+
+// Gets index of inserted cell
+function getInputIndex(htmlElement) {
+    for (let i = 0; i < 9; i++) {
+        for (let j = 0; j < 9; j++) {
+            if (htmlBoard[i][j].id == htmlElement.id) {
+                return [i, j]
+            }
+        }
+    }
+}
 
 
 // FOR THE SOLVE BUTTON
@@ -578,9 +612,10 @@ function placeUserInput() {
             if (tempBoard[i][j].textContent != userBoard[i][j]){
                 // if (tempBoard[i][j].textContent != "") {
                     if (usePen){
-                        userBoard[i][j] = tempBoard[i][j].textContent;
+                        userBoard[i][j] = Number(tempBoard[i][j].textContent);
                         populateBoard(userBoard)
                     }else if (usePencil) {
+                        console.log(htmlBoard[i][j])
                         console.log("Pencil Used")
                     } else if (useTemp) {
                         console.log("Temp Used")

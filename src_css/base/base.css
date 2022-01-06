@@ -15,6 +15,7 @@ td {
     border-radius: 5px;
     height: 50px;
     width: 50px;
+    position: relative;
 }
 /* td:hover {
     background: rgb(154, 187, 223);
@@ -62,4 +63,11 @@ button {
     background: darkkhaki;
     border-radius: 5px;
     border: 2px solid darkslategray;
+}
+table p {
+    font-size: 0.7rem;
+    height: 0.7rem;
+    position: absolute;
+    top: -9px;
+    left: 2px;
 }
