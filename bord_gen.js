@@ -165,14 +165,14 @@ let boolForEventListner = false;
 let isBoxDisplayed = false;
 
 function startNewGame(diff) {
-    let brd = generateBoard();
-    originalBoard = copyArray(brd);
-    userBoard = copyArray(brd);
-    solveBoard(brd);
-    removeDiff(diff, brd);
-    originalBoard = copyArray(brd);
-    userBoard = copyArray(brd);
-    let temp = makehtmlBoardAnArray();
+    let brd = generateBoard();              // builds grid 1, 4, and 9 on board
+    originalBoard = copyArray(brd);         // copies the board so the original board is stored
+    userBoard = copyArray(brd);             // makes a copy of the board for all the user input
+    solveBoard(brd);                        // solves the board to ensure the board will be solvable once displayed
+    removeDiff(diff, brd);                  // removes cells depending on users dificulty choice
+    originalBoard = copyArray(brd);         // makes a copy of the bord with selected diff
+    userBoard = copyArray(brd);             // makes a copy of the bord with selected diff
+    let temp = makehtmlBoardAnArray();      // looks at the current board displayed and creates hover effects and adds event listners
     for (let i = 0; i < 9; i++) {
         for ( let j = 0; j < 9; j++) {
             temp[i][j].style.backgroundColor = "lightgray";
