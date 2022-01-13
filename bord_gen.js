@@ -1,4 +1,9 @@
 
+// PROVIDES A GLOBAL ARRAY TO STORE THE ORIGINAL BOARD
+var originalBoard = [];
+var userBoard = [];
+
+
 let htmlBoard = new Array(9).fill("").map(() => new Array(9).fill(""));
 
 function makehtmlBoardAnArray() {
@@ -110,7 +115,7 @@ function chooseDificulty() {
     };
     makehtmlBoardAnArray();
     originalBoard = new Array(9).fill("").map(() => new Array(9).fill(""));
-    userBoard = [];
+    userBoard = new Array(9).fill("").map(() => new Array(9).fill(""));
     let diffChoicePop = document.getElementById("difficulty-options");
     diffChoicePop.style.opacity = '1';
     diffChoicePop.style.pointerEvents = 'all';
@@ -177,22 +182,25 @@ function startNewGame(diff) {
         for ( let j = 0; j < 9; j++) {
             temp[i][j].style.backgroundColor = "lightgray";
             temp[i][j].addEventListener("mouseover", function(event) {
-                if (event.target.textContent == originalBoard[i][j] && originalBoard[i][j] != "") {
-                    event.target.style.backgroundColor = "lightslategray"
-                } else {
-                    event.target.style.backgroundColor = "rgb(154, 187, 223)";
+                if (!(event.target.id == "")){
+                    if (userBoard[i][j] == originalBoard[i][j] && originalBoard[i][j] != "") {
+                        event.target.style.backgroundColor = "lightslategray"
+                    } else {
+                        event.target.style.backgroundColor = "rgb(154, 187, 223)";
+                    }
                 }
-                
             });
             temp[i][j].addEventListener("mouseout", function(event) {
-                if (event.target.textContent == originalBoard[i][j] && originalBoard[i][j] != "") {
-                    event.target.style.backgroundColor = "lightslategray"
-                } else if (!(validPlacement(userBoard, Number(event.originalTarget.textContent), getInputIndex(event.originalTarget))) && event.target.textContent != "") {
-                    event.target.style.backgroundColor = "red";
-                } else if (event.target.textContent > 0) {
-                    event.target.style.backgroundColor = "rgb(154, 187, 223)"
-                } else {
-                    event.target.style.backgroundColor = "lightgray"
+                if (!(event.target.id == "")){
+                    if (userBoard[i][j] == originalBoard[i][j] && originalBoard[i][j] != "") {
+                        event.target.style.backgroundColor = "lightslategray"
+                    } else if (!(validPlacement(userBoard, Number(userBoard[i][j]), getInputIndex(event.originalTarget))) && userBoard[i][j] != "") {
+                        event.target.style.backgroundColor = "red";
+                    } else if (userBoard[i][j] > 0) {
+                        event.target.style.backgroundColor = "rgb(154, 187, 223)"
+                    } else {
+                        event.target.style.backgroundColor = "lightgray"
+                    }
                 }
             })
         }
@@ -423,7 +431,7 @@ function removeDiff(diff, bo) {
         bo[row][col] = "";
         
     }
-    populateBoard(bo);
+    // populateBoard(bo);
 
 }
 
@@ -431,7 +439,7 @@ function removeDiff(diff, bo) {
 function populateBoard(board) {
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
-            // htmlBoard[i][j].style.background = "lightgray";
+            // console.log(htmlBoard[i][j].childNodes.localName == "p", "abc")
             htmlBoard[i][j].textContent = board[i][j];
         }
     }
@@ -450,12 +458,6 @@ function populateBoard(board) {
         console.log("done")
     }
 }
-
-
-// PROVIDES A GLOBAL ARRAY TO STORE THE ORIGINAL BOARD
-var originalBoard = [];
-var userBoard = [];
-
 
 const inputSelection = document.getElementById("select-input");
 
@@ -520,6 +522,7 @@ function insertSelectedNumber(cell) {
                     let currentIndex = getInputIndex(activeCell)
                     let isValid =  validPlacement(userBoard, Number(this.textContent), currentIndex);
                     activeCell.textContent = this.textContent;
+                    userBoard[currentIndex[0]][currentIndex[1]] = Number(this.textContent);
                     if (isValid) {
                         activeCell.style.background = "rgb(154, 187, 223)";
                     } else {
@@ -529,22 +532,28 @@ function insertSelectedNumber(cell) {
                     activeCell.textContent = "";
                     activeCell.style.background = "lightgrey";
                 }
-                placeUserInput();
+                
+                // placeUserInput();
             }else if (usePencil) {
-                if (activeCell.childNodes.length == 0){
-                    console.log("a")
-                    let pencilP = document.createElement("p")
-                    pencilP.textContent = this.textContent
-                    activeCell.appendChild(pencilP)
+                if (!(this.textContent == "Clear")) {
+                    if (activeCell.childNodes.length == 0){
+                        let pencilP = document.createElement("p");
+                        pencilP.textContent = this.textContent;
+                        activeCell.appendChild(pencilP);
+                    } else {
+                        const pencilArr = (activeCell.childNodes[0].textContent).split(",");
+                        const pencilArrNumbers = pencilArr.map((i) => Number(i));
+                        console.log(pencilArrNumbers)
+                        activeCell.childNodes[0].textContent = `${activeCell.childNodes[0].textContent},${this.textContent}`;
+                    }
                 } else {
-                    console.log(activeCell.childNodes[0])
-                    activeCell.childNodes[0].textContent = `${activeCell.childNodes[0].textContent},${this.textContent}`;
+                    activeCell.childNodes[0].textContent = "";
                 }
             } else if (useTemp) {
                 console.log("Temp Used")
             }
-            
-            
+                
+                
             removeEventListenerAddToBoard();
         }
         closeInputBox();
