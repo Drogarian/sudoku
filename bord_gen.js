@@ -2,7 +2,7 @@
 // PROVIDES A GLOBAL ARRAY TO STORE THE ORIGINAL BOARD
 var originalBoard = [];
 var userBoard = [];
-
+var activeCellForBoardAdd;
 
 let htmlBoard = new Array(9).fill("").map(() => new Array(9).fill(""));
 
@@ -166,7 +166,7 @@ function hardGame() {
 }
 
 // STARTS THE GAME
-let boolForEventListner = false;
+// let boolForEventListner = false;
 let isBoxDisplayed = false;
 
 function startNewGame(diff) {
@@ -188,6 +188,7 @@ function startNewGame(diff) {
                     } else {
                         event.target.style.backgroundColor = "rgb(154, 187, 223)";
                     }
+                    event.target.addEventListener("click", boardEventListnerFunction)
                 }
             });
             temp[i][j].addEventListener("mouseout", function(event) {
@@ -201,26 +202,32 @@ function startNewGame(diff) {
                     } else {
                         event.target.style.backgroundColor = "lightgray"
                     }
+                    event.target.removeEventListener("click", boardEventListnerFunction)
                 }
             })
         }
     }
     populateBoard(brd);
-    cellEventListner();
+    // cellEventListner();
 }
 
-let boardEventListner;
-function cellEventListner() {
-    boardEventListner = "";
-    boardEventListner = document.querySelectorAll(".brd-el");
-    if (!boolForEventListner) {
-        boolForEventListner = true;
-        boardEventListner.forEach(element => {
-            element.addEventListener("click", boardEventListnerFunction);
-            // element.removeEventListener("click", boardEventListnerFunction);
-        });
-    }
+function testFunction() {
+    console.log("test function")
 }
+
+// let boardEventListner;
+// function cellEventListner() {
+//     boardEventListner = "";
+//     boardEventListner = document.querySelectorAll(".brd-el");
+//     if (!boolForEventListner) {
+//         boolForEventListner = true;
+//         console.log(this);
+//         boardEventListner.forEach(element => {
+//             element.addEventListener("click", boardEventListnerFunction);
+            
+//         });
+//     }
+// }
 
 function boardEventListnerFunction() {
     let clickedCell = getInputIndex(this);
@@ -496,10 +503,13 @@ function closeInputBox() {
     isBoxDisplayed = false;
     inputSelection.style.opacity = "0";
     inputSelection.style.pointerEvents = "none";
+    removeEventListenerAddToBoard();
 }
 
 // Inserts the selected number from the input selection box
+
 function insertSelectedNumber(cell) {
+    activeCellForBoardAdd = document.getElementById(`${cell}`);
     insert_1.addEventListener("click", addToBoard);
     insert_2.addEventListener("click", addToBoard);
     insert_3.addEventListener("click", addToBoard);
@@ -510,66 +520,82 @@ function insertSelectedNumber(cell) {
     insert_8.addEventListener("click", addToBoard);
     insert_9.addEventListener("click", addToBoard);
     clearEl.addEventListener("click", addToBoard);
-    let activeCell = document.getElementById(`${cell}`);
-    let cellCheck = activeCell.getBoundingClientRect();
+    let cellCheck = activeCellForBoardAdd.getBoundingClientRect();
     let inputCheck = inputSelection.getBoundingClientRect();
-    function addToBoard() {
-        cellCheck = activeCell.getBoundingClientRect();
-        inputCheck = inputSelection.getBoundingClientRect();
-        if (cellCheck.left == inputCheck.left && Math.round(cellCheck.bottom) == Math.round(inputCheck.top)) {
-            if (usePen){
-                if (!(this.textContent == "Clear")) {
-                    let currentIndex = getInputIndex(activeCell)
-                    let isValid =  validPlacement(userBoard, Number(this.textContent), currentIndex);
-                    activeCell.textContent = this.textContent;
-                    userBoard[currentIndex[0]][currentIndex[1]] = Number(this.textContent);
-                    if (isValid) {
-                        activeCell.style.background = "rgb(154, 187, 223)";
-                    } else {
-                        activeCell.style.background = "red";
-                    }
-                } else {
-                    activeCell.textContent = "";
-                    activeCell.style.background = "lightgrey";
-                }
-                
-                // placeUserInput();
-            }else if (usePencil) {
-                if (!(this.textContent == "Clear")) {
-                    if (activeCell.childNodes.length == 0){
-                        let pencilP = document.createElement("p");
-                        pencilP.textContent = this.textContent;
-                        activeCell.appendChild(pencilP);
-                    } else {
-                        const pencilArr = (activeCell.childNodes[0].textContent).split(",");
-                        const pencilArrNumbers = pencilArr.map((i) => Number(i));
-                        console.log(pencilArrNumbers)
-                        activeCell.childNodes[0].textContent = `${activeCell.childNodes[0].textContent},${this.textContent}`;
-                    }
-                } else {
-                    activeCell.childNodes[0].textContent = "";
-                }
-            } else if (useTemp) {
-                console.log("Temp Used")
-            }
-                
-                
-            removeEventListenerAddToBoard();
-        }
-        closeInputBox();
-    }
-    function removeEventListenerAddToBoard() {
-        insert_1.removeEventListener("click", addToBoard);
-        insert_2.removeEventListener("click", addToBoard);
-        insert_3.removeEventListener("click", addToBoard);
-        insert_4.removeEventListener("click", addToBoard);
-        insert_5.removeEventListener("click", addToBoard);
-        insert_6.removeEventListener("click", addToBoard);
-        insert_7.removeEventListener("click", addToBoard);
-        insert_8.removeEventListener("click", addToBoard);
-        insert_9.removeEventListener("click", addToBoard);
-    }
 }
+
+function addToBoard() {
+    cellCheck = activeCellForBoardAdd.getBoundingClientRect();
+    inputCheck = inputSelection.getBoundingClientRect();
+    if (cellCheck.left == inputCheck.left && Math.round(cellCheck.bottom) == Math.round(inputCheck.top)) {
+        let currentIndex = getInputIndex(activeCellForBoardAdd)
+        if (usePen){
+            let isValid =  validPlacement(userBoard, Number(this.textContent), currentIndex);
+            activeCellForBoardAdd.textContent = this.textContent;
+            if (!(this.textContent == "Clear")) {
+                userBoard[currentIndex[0]][currentIndex[1]] = Number(this.textContent);
+                if (isValid) {
+                    activeCellForBoardAdd.style.background = "rgb(154, 187, 223)";
+                } else {
+                    activeCellForBoardAdd.style.background = "red";
+                }
+            } else {
+                userBoard[currentIndex[0]][currentIndex[1]] = "";
+                activeCellForBoardAdd.textContent = "";
+                activeCellForBoardAdd.style.background = "lightgrey";
+            }
+            
+            // placeUserInput();
+        }else if (usePencil) {
+            if (!(this.textContent == "Clear")) {
+                if (activeCellForBoardAdd.childNodes.length == 0 || activeCellForBoardAdd.childNodes[0].textContent == ""){
+                    let pencilP = document.createElement("p");
+                    pencilP.textContent = this.textContent;
+                    activeCellForBoardAdd.appendChild(pencilP);
+                } else {
+                    const pencilArr = (activeCellForBoardAdd.childNodes[0].textContent).split(",");
+                    let pencilArrNumbers = pencilArr.map((i) => Number(i));
+                    if (pencilArrNumbers.includes(Number(this.textContent))) {
+                        let remIndex = pencilArrNumbers.indexOf(Number(this.textContent));
+                        pencilArrNumbers.splice(remIndex, 1);
+                        activeCellForBoardAdd.childNodes[0].textContent = `${pencilArrNumbers}`;
+                        if (activeCellForBoardAdd.childNodes[0].textContent == "") {
+                            activeCellForBoardAdd.childNodes[0].textContent = "";
+                            activeCellForBoardAdd.removeChild(activeCellForBoardAdd.firstChild);
+                        }
+                    } else {
+                        pencilArrNumbers.push(Number(this.textContent));
+                        pencilArrNumbers.sort();
+                        activeCellForBoardAdd.childNodes[0].textContent = `${pencilArrNumbers}`;
+                    }
+                }
+            } else {
+                activeCellForBoardAdd.childNodes[0].textContent = "";
+                activeCellForBoardAdd.removeChild(activeCellForBoardAdd.firstChild);
+                activeCellForBoardAdd.textContent = userBoard[currentIndex[0]][currentIndex[1]];
+
+            }
+        } else if (useTemp) {
+            console.log("Temp Used")
+        }
+            
+            
+        removeEventListenerAddToBoard();
+    }
+    closeInputBox();
+}
+function removeEventListenerAddToBoard() {
+    insert_1.removeEventListener("click", addToBoard);
+    insert_2.removeEventListener("click", addToBoard);
+    insert_3.removeEventListener("click", addToBoard);
+    insert_4.removeEventListener("click", addToBoard);
+    insert_5.removeEventListener("click", addToBoard);
+    insert_6.removeEventListener("click", addToBoard);
+    insert_7.removeEventListener("click", addToBoard);
+    insert_8.removeEventListener("click", addToBoard);
+    insert_9.removeEventListener("click", addToBoard);
+}
+
 
 
 // Gets index of inserted cell
