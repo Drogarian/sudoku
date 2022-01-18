@@ -208,26 +208,8 @@ function startNewGame(diff) {
         }
     }
     populateBoard(brd);
-    // cellEventListner();
+    penEl.style.background = "grey"
 }
-
-function testFunction() {
-    console.log("test function")
-}
-
-// let boardEventListner;
-// function cellEventListner() {
-//     boardEventListner = "";
-//     boardEventListner = document.querySelectorAll(".brd-el");
-//     if (!boolForEventListner) {
-//         boolForEventListner = true;
-//         console.log(this);
-//         boardEventListner.forEach(element => {
-//             element.addEventListener("click", boardEventListnerFunction);
-            
-//         });
-//     }
-// }
 
 function boardEventListnerFunction() {
     let clickedCell = getInputIndex(this);
@@ -529,6 +511,7 @@ function addToBoard() {
     inputCheck = inputSelection.getBoundingClientRect();
     if (cellCheck.left == inputCheck.left && Math.round(cellCheck.bottom) == Math.round(inputCheck.top)) {
         let currentIndex = getInputIndex(activeCellForBoardAdd)
+        // placeUserInput();
         if (usePen){
             let isValid =  validPlacement(userBoard, Number(this.textContent), currentIndex);
             activeCellForBoardAdd.textContent = this.textContent;
@@ -545,35 +528,51 @@ function addToBoard() {
                 activeCellForBoardAdd.style.background = "lightgrey";
             }
             
-            // placeUserInput();
         }else if (usePencil) {
+            let pIsInCell = false;
+            let activeNodeList = activeCellForBoardAdd.childNodes;
             if (!(this.textContent == "Clear")) {
-                if (activeCellForBoardAdd.childNodes.length == 0 || activeCellForBoardAdd.childNodes[0].textContent == ""){
+                if (activeCellForBoardAdd.hasChildNodes()) {
+
+                    activeNodeList.forEach(kid => { //using kid instead of child so I do not get confused with built in functions
+                        if (kid.localName == "p") {
+                            pIsInCell = true;
+                            const pencilArr = (kid.textContent).split(",");
+                            let pencilArrNumbers = pencilArr.map((i) => Number(i));
+                            if (pencilArrNumbers.includes(Number(this.textContent))) {
+                                if (pencilArrNumbers.length == 1) {
+                                    removePencilNode()
+                                } else {
+                                let remIndex = pencilArrNumbers.indexOf(Number(this.textContent));
+                                pencilArrNumbers.splice(remIndex, 1);
+                                kid.textContent = `${pencilArrNumbers}`;
+                                if (kid.textContent == "") {
+                                    kid.textContent = "";
+                                    activeCellForBoardAdd.removeChild(activeCellForBoardAdd.firstChild);
+                                }
+                            }
+                            } else {
+                                pencilArrNumbers.push(Number(this.textContent));
+                                pencilArrNumbers.sort();
+                                kid.textContent = `${pencilArrNumbers}`;
+                            }
+                        }});
+                }
+                if (pIsInCell == false){
                     let pencilP = document.createElement("p");
                     pencilP.textContent = this.textContent;
                     activeCellForBoardAdd.appendChild(pencilP);
-                } else {
-                    const pencilArr = (activeCellForBoardAdd.childNodes[0].textContent).split(",");
-                    let pencilArrNumbers = pencilArr.map((i) => Number(i));
-                    if (pencilArrNumbers.includes(Number(this.textContent))) {
-                        let remIndex = pencilArrNumbers.indexOf(Number(this.textContent));
-                        pencilArrNumbers.splice(remIndex, 1);
-                        activeCellForBoardAdd.childNodes[0].textContent = `${pencilArrNumbers}`;
-                        if (activeCellForBoardAdd.childNodes[0].textContent == "") {
-                            activeCellForBoardAdd.childNodes[0].textContent = "";
-                            activeCellForBoardAdd.removeChild(activeCellForBoardAdd.firstChild);
-                        }
-                    } else {
-                        pencilArrNumbers.push(Number(this.textContent));
-                        pencilArrNumbers.sort();
-                        activeCellForBoardAdd.childNodes[0].textContent = `${pencilArrNumbers}`;
-                    }
-                }
+                } 
             } else {
-                activeCellForBoardAdd.childNodes[0].textContent = "";
-                activeCellForBoardAdd.removeChild(activeCellForBoardAdd.firstChild);
-                activeCellForBoardAdd.textContent = userBoard[currentIndex[0]][currentIndex[1]];
-
+                removePencilNode()                
+            }
+            function removePencilNode() {
+                activeNodeList.forEach(kid => {
+                    if (kid.localName == "p") {
+                        kid.textContent = "";
+                        activeCellForBoardAdd.removeChild(kid);
+                    }
+                })
             }
         } else if (useTemp) {
             console.log("Temp Used")
@@ -677,16 +676,35 @@ function penFunction() {
     usePen = true;
     usePencil = false;
     useTemp = false;
+    highlightToolInUse()
 }
 
 function pencilFunction() {
     usePen = false;
     usePencil = true;
     useTemp = false;
+    highlightToolInUse()
 }
 
 function tempFunction() {
     usePen = false;
     usePencil = false;
     useTemp = true;
+    highlightToolInUse()
+}
+
+function highlightToolInUse() {
+    if (usePen) {
+        penEl.style.background = "grey";
+        pencilEl.style.background = "darkkhaki";
+        tempEl.style.background = "darkkhaki";
+    } else if (usePencil) {
+        penEl.style.background = "darkkhaki";
+        pencilEl.style.background = "grey";
+        tempEl.style.background = "darkkhaki";
+    } else {
+        penEl.style.background = "darkkhaki";
+        pencilEl.style.background = "darkkhaki";
+        tempEl.style.background = "grey";
+    }
 }
