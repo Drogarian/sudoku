@@ -280,7 +280,6 @@ function generateBoard(){
 function solveBoard(bo) {
     let find = findEmtyCell(bo)
     if (!find) {
-        
         return true;
     }
     let row = find[0];
@@ -420,7 +419,6 @@ function removeDiff(diff, bo) {
         bo[row][col] = "";
         
     }
-    // populateBoard(bo);
 
 }
 
@@ -428,7 +426,6 @@ function removeDiff(diff, bo) {
 function populateBoard(board) {
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
-            // console.log(htmlBoard[i][j].childNodes.localName == "p", "abc")
             htmlBoard[i][j].textContent = board[i][j];
         }
     }
@@ -452,7 +449,6 @@ const inputSelection = document.getElementById("select-input");
 
 
 // Function to bring up the selection box
-
 let insert_1 = document.getElementById("input-1")
 let insert_2 = document.getElementById("input-2")
 let insert_3 = document.getElementById("input-3")
@@ -511,7 +507,6 @@ function addToBoard() {
     inputCheck = inputSelection.getBoundingClientRect();
     if (cellCheck.left == inputCheck.left && Math.round(cellCheck.bottom) == Math.round(inputCheck.top)) {
         let currentIndex = getInputIndex(activeCellForBoardAdd)
-        // placeUserInput();
         if (usePen){
             let isValid =  validPlacement(userBoard, Number(this.textContent), currentIndex);
             activeCellForBoardAdd.textContent = this.textContent;
@@ -617,48 +612,38 @@ function solveCurrentGame() {
 
 // FOR THE HINT BUTTON
 function giveHint() {
-    let temp = makehtmlBoardAnArray();
     let brd = new Array(9).fill("").map(() => new Array(9).fill(""));
-    for (let i = 0; i < 9; i++) {
-        for (let j = 0; j < 9; j++) {
-            if (temp[i][j].textContent == "") {
-                brd[i][j] = "";
-            } else {
-                brd[i][j] = Number(temp[i][j].textContent);
-            }
-        }
-    }
-    // for (let i = 0; i < 9; i++) {
-    //     brd[i] = originalBoard[i].slice();
-    // }
+    brd = copyArray(userBoard);
+    
     let hintPos = findShortArr(brd);
     userBoard[hintPos[0]][hintPos[1]] = [...brd[hintPos[0]][hintPos[1]]];
+    htmlBoard[hintPos[0]][hintPos[1]].textContent = [...brd[hintPos[0]][hintPos[1]]];
     if (userBoard[hintPos[0]][hintPos[1]].length == 1) {
-        userBoard[hintPos[0]][hintPos[1]] = userBoard[hintPos[0]][hintPos[1]][0]
+        userBoard[hintPos[0]][hintPos[1]] = userBoard[hintPos[0]][hintPos[1]][0];
+        htmlBoard[hintPos[0]][hintPos[1]].textContent = `${userBoard[hintPos[0]][hintPos[1]]}`;
     }
-    populateBoard(userBoard);
 }
 
-function placeUserInput() {
-    let tempBoard = makehtmlBoardAnArray();
-    for (let i =0; i < 9; i++) {
-        for (let j = 0; j < 9; j++){
-            if (tempBoard[i][j].textContent != userBoard[i][j]){
-                // if (tempBoard[i][j].textContent != "") {
-                    if (usePen){
-                        userBoard[i][j] = Number(tempBoard[i][j].textContent);
-                        populateBoard(userBoard)
-                    }else if (usePencil) {
-                        console.log(htmlBoard[i][j])
-                        console.log("Pencil Used")
-                    } else if (useTemp) {
-                        console.log("Temp Used")
-                    }
-                // }
-            }
-        }
-    }
-}
+// function placeUserInput() {
+//     let tempBoard = makehtmlBoardAnArray();
+//     for (let i =0; i < 9; i++) {
+//         for (let j = 0; j < 9; j++){
+//             if (tempBoard[i][j].textContent != userBoard[i][j]){
+//                 // if (tempBoard[i][j].textContent != "") {
+//                     if (usePen){
+//                         userBoard[i][j] = Number(tempBoard[i][j].textContent);
+//                         populateBoard(userBoard)
+//                     }else if (usePencil) {
+//                         console.log(htmlBoard[i][j])
+//                         console.log("Pencil Used")
+//                     } else if (useTemp) {
+//                         console.log("Temp Used")
+//                     }
+//                 // }
+//             }
+//         }
+//     }
+// }
 
 const penEl = document.getElementById("pen-permanent");
 let usePen = true;
