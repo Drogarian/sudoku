@@ -429,6 +429,10 @@ function populateBoard(board) {
             htmlBoard[i][j].textContent = board[i][j];
         }
     }
+    countToEnd();
+}
+
+function countToEnd() {
     let completeCounter = 0;
     for (let i = 0; i < 9; i++) {
         for (let j = 0; j < 9; j++) {
@@ -517,10 +521,12 @@ function addToBoard() {
                 } else {
                     activeCellForBoardAdd.style.background = "red";
                 }
+                countToEnd();
             } else {
                 userBoard[currentIndex[0]][currentIndex[1]] = "";
                 activeCellForBoardAdd.textContent = "";
                 activeCellForBoardAdd.style.background = "lightgrey";
+                countToEnd();
             }
             
         }else if (usePencil) {
@@ -557,6 +563,7 @@ function addToBoard() {
                     let pencilP = document.createElement("p");
                     pencilP.textContent = this.textContent;
                     activeCellForBoardAdd.appendChild(pencilP);
+                    pencilP.style.pointerEvents = "none";
                 } 
             } else {
                 removePencilNode()                
@@ -692,4 +699,9 @@ function highlightToolInUse() {
         pencilEl.style.background = "darkkhaki";
         tempEl.style.background = "grey";
     }
+}
+
+function clearPuzz() {
+    userBoard = copyArray(originalBoard);
+    populateBoard(originalBoard)
 }
