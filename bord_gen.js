@@ -710,6 +710,8 @@ const tempEl = document.getElementById("temp-arr");
 let useTemp = false;
 tempEl.addEventListener("click", tempFunction);
 
+let brdEl = document.getElementById("sudoku-table");
+
 function penFunction() {
     usePen = true;
     usePencil = false;
@@ -721,7 +723,9 @@ function pencilFunction() {
     usePen = false;
     usePencil = true;
     useTemp = false;
-    highlightToolInUse()
+    highlightToolInUse();
+    const pencilURL = "../images/pencil_img.ico";
+    brdEl.style.cursor = "url(" + pencilURL + ")";
 }
 
 function tempFunction() {
