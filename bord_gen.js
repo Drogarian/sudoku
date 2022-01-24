@@ -536,7 +536,7 @@ function addToBoard() {
                 if (activeCellForBoardAdd.hasChildNodes()) {
 
                     activeNodeList.forEach(kid => { //using kid instead of child so I do not get confused with built in functions
-                        if (kid.localName == "p") {
+                        if (kid.className == "pencil_p_element") {
                             pIsInCell = true;
                             const pencilArr = (kid.textContent).split(",");
                             let pencilArrNumbers = pencilArr.map((i) => Number(i));
@@ -561,6 +561,7 @@ function addToBoard() {
                 }
                 if (pIsInCell == false){
                     let pencilP = document.createElement("p");
+                    pencilP.className = "pencil_p_element";
                     pencilP.textContent = this.textContent;
                     activeCellForBoardAdd.appendChild(pencilP);
                     pencilP.style.pointerEvents = "none";
@@ -570,14 +571,59 @@ function addToBoard() {
             }
             function removePencilNode() {
                 activeNodeList.forEach(kid => {
-                    if (kid.localName == "p") {
+                    if (kid.className == "pencil_p_element") {
                         kid.textContent = "";
                         activeCellForBoardAdd.removeChild(kid);
                     }
                 })
             }
         } else if (useTemp) {
-            console.log("Temp Used")
+            let tIsInCell = false;
+            let activeNodeList = activeCellForBoardAdd.childNodes;
+            if (!(this.textContent == "Clear")) {
+                if (activeCellForBoardAdd.hasChildNodes()) {
+                    activeNodeList.forEach(kid => { //using kid instead of child so I do not get confused with built in functions
+                        if (kid.className == "temp_p_element") {
+                            tIsInCell = true;
+                            const tempArr = (kid.textContent).split(",");
+                            let tempArrNumbers = tempArr.map((i) => Number(i));
+                            if (tempArrNumbers.includes(Number(this.textContent))) {
+                                if (tempArrNumbers.length == 1) {
+                                    removeTempNode()
+                                } else {
+                                let remIndex = tempArrNumbers.indexOf(Number(this.textContent));
+                                tempArrNumbers.splice(remIndex, 1);
+                                kid.textContent = `${tempArrNumbers}`;
+                                if (kid.textContent == "") {
+                                    kid.textContent = "";
+                                    activeCellForBoardAdd.removeChild(activeCellForBoardAdd.firstChild);
+                                }
+                            }
+                            } else {
+                                tempArrNumbers.push(Number(this.textContent));
+                                tempArrNumbers.sort();
+                                kid.textContent = `${tempArrNumbers}`;
+                            }
+                        }});
+                }
+                if (tIsInCell == false){
+                    let tempP = document.createElement("p");
+                    tempP.className = "temp_p_element";
+                    tempP.textContent = this.textContent;
+                    activeCellForBoardAdd.appendChild(tempP);
+                    tempP.style.pointerEvents = "none";
+                } 
+            } else {
+                removeTempNode()                
+            }
+            function removeTempNode() {
+                activeNodeList.forEach(kid => {
+                    if (kid.className == "temp_p_element") {
+                        kid.textContent = "";
+                        activeCellForBoardAdd.removeChild(kid);
+                    }
+                })
+            }
         }
             
             

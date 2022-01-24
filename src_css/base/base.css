@@ -64,10 +64,14 @@ button {
     border-radius: 5px;
     border: 2px solid darkslategray;
 }
-table p {
+.pencil_p_element {
     font-size: 0.7rem;
     height: 0.7rem;
     position: absolute;
     top: -9px;
     left: 2px;
+}
+.temp_p_element {
+    margin: 0;
+    padding: 0;
 }
