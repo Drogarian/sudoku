@@ -186,7 +186,7 @@ function startNewGame(diff) {
                     if (userBoard[i][j] == originalBoard[i][j] && originalBoard[i][j] != "") {
                         event.target.style.backgroundColor = "lightslategray"
                     } else {
-                        event.target.style.backgroundColor = "rgb(154, 187, 223)";
+                        event.target.style.backgroundColor = "rgb(64, 139, 64)";
                     }
                     event.target.addEventListener("click", boardEventListnerFunction)
                 }
@@ -445,7 +445,7 @@ function countToEnd() {
         }
     }
     if (completeCounter == 81){
-        console.log("done")
+        alert("done")
     }
 }
 
@@ -711,12 +711,14 @@ let useTemp = false;
 tempEl.addEventListener("click", tempFunction);
 
 let brdEl = document.getElementById("sudoku-table");
+brdEl.className = "pen-table"
 
 function penFunction() {
     usePen = true;
     usePencil = false;
     useTemp = false;
     highlightToolInUse()
+    brdEl.className = "pen-table"
 }
 
 function pencilFunction() {
@@ -724,8 +726,9 @@ function pencilFunction() {
     usePencil = true;
     useTemp = false;
     highlightToolInUse();
-    const pencilURL = "../images/pencil_img.ico";
-    brdEl.style.cursor = "url(" + pencilURL + ")";
+    brdEl.className = "pencil-table"
+    // const pencilURL = "../images/pencil_img.ico";
+    // brdEl.style.cursor = "url(" + pencilURL + ")";
 }
 
 function tempFunction() {
@@ -733,6 +736,7 @@ function tempFunction() {
     usePencil = false;
     useTemp = true;
     highlightToolInUse()
+    brdEl.className = "temp-table"
 }
 
 function highlightToolInUse() {
@@ -755,3 +759,5 @@ function clearPuzz() {
     userBoard = copyArray(originalBoard);
     populateBoard(originalBoard)
 }
+
+console.log(MouseEvent)
