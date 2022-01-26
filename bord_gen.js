@@ -6,6 +6,12 @@ var activeCellForBoardAdd;
 
 let htmlBoard = new Array(9).fill("").map(() => new Array(9).fill(""));
 
+let gameTime = document.getElementById("game-time");
+
+let secCount = 0;
+let minCount = 0;
+let timerStart = false;
+
 function makehtmlBoardAnArray() {
 
     htmlBoard[0][0] = document.getElementById("grid-1-cell-1");
@@ -108,6 +114,7 @@ var num_arr = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 let firstGame = true;
 
 function chooseDificulty() {
+    timerStart = false;
     if (firstGame){    
         firstGame = false;
     } else {
@@ -208,7 +215,11 @@ function startNewGame(diff) {
         }
     }
     populateBoard(brd);
-    penEl.style.background = "grey"
+    highlightToolInUse()
+    secCount = 0;
+    minCount = 0;
+    timerStart = true;
+    gameTimer();
 }
 
 function boardEventListnerFunction() {
@@ -446,6 +457,7 @@ function countToEnd() {
     }
     if (completeCounter == 81){
         alert("done")
+        timerStart = false;
     }
 }
 
@@ -471,7 +483,7 @@ function openInputBox(cellToChange) {
         inputSelection.style.opacity = "1";
         inputSelection.style.left =  `${cellPos.left}px`;
         inputSelection.style.top = `${cellPos.bottom}px`;
-        inputSelection.style.zIndex = "2";
+        // inputSelection.style.zIndex = "1";
         inputSelection.style.pointerEvents = "all";
         
         insertSelectedNumber(cellToChange);
@@ -715,7 +727,7 @@ let brdEl = document.getElementById("sudoku-table");
 let pointerImage = {
     pen: "./pen_img.png",
     pencil: "./pencil_img.png",
-    temp: "./temp_img.png"
+    tempo: "./temp_img.png"
 }
 
 document.getElementById("pointer-image").src = pointerImage.pen;
@@ -742,6 +754,7 @@ function tempFunction() {
     usePencil = false;
     useTemp = true;
     highlightToolInUse()
+    document.getElementById("pointer-image").src = pointerImage.tempo;
 }
 
 function highlightToolInUse() {
@@ -768,7 +781,23 @@ function clearPuzz() {
 let toolInUse = document.getElementById("tool-pointer");
 
 onmousemove = function(e){
-    toolInUse.style.left = e.clientX - 9 + "px"
-    toolInUse.style.top = e.clientY + 18 + "px"
+    toolInUse.style.left = e.clientX - 7 + "px"
+    toolInUse.style.top = e.clientY - 2 + "px"
 };
+
+
+
+function gameTimer() {
+    if (!timerStart) {
+        return
+    }
+    if (secCount > 59) {
+        secCount = 0;
+        minCount++
+    }
+    gameTime.textContent = minCount + "m:" + secCount + "s";
+    secCount++
+    setTimeout(() => gameTimer(), 1000);
+}
+
 
