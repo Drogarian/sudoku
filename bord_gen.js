@@ -711,14 +711,22 @@ let useTemp = false;
 tempEl.addEventListener("click", tempFunction);
 
 let brdEl = document.getElementById("sudoku-table");
-brdEl.className = "pen-table"
+
+let pointerImage = {
+    pen: "./pen_img.png",
+    pencil: "./pencil_img.png",
+    temp: "./temp_img.png"
+}
+
+document.getElementById("pointer-image").src = pointerImage.pen;
+
 
 function penFunction() {
     usePen = true;
     usePencil = false;
     useTemp = false;
     highlightToolInUse()
-    brdEl.className = "pen-table"
+    document.getElementById("pointer-image").src = pointerImage.pen;
 }
 
 function pencilFunction() {
@@ -726,9 +734,7 @@ function pencilFunction() {
     usePencil = true;
     useTemp = false;
     highlightToolInUse();
-    brdEl.className = "pencil-table"
-    // const pencilURL = "../images/pencil_img.ico";
-    // brdEl.style.cursor = "url(" + pencilURL + ")";
+    document.getElementById("pointer-image").src = pointerImage.pencil;
 }
 
 function tempFunction() {
@@ -736,7 +742,6 @@ function tempFunction() {
     usePencil = false;
     useTemp = true;
     highlightToolInUse()
-    brdEl.className = "temp-table"
 }
 
 function highlightToolInUse() {
@@ -760,4 +765,10 @@ function clearPuzz() {
     populateBoard(originalBoard)
 }
 
-console.log(MouseEvent)
+let toolInUse = document.getElementById("tool-pointer");
+
+onmousemove = function(e){
+    toolInUse.style.left = e.clientX - 9 + "px"
+    toolInUse.style.top = e.clientY + 18 + "px"
+};
+

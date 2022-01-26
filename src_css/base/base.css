@@ -56,6 +56,8 @@ button {
     background: rgba(0, 0, 0, 0.5);
     border-radius: 5px;
     pointer-events: none;
+    cursor: none;
+    z-index: 2;
 }
 .input-selection input{
     margin: 0.2rem;
@@ -63,6 +65,10 @@ button {
     background: darkkhaki;
     border-radius: 5px;
     border: 2px solid darkslategray;
+    cursor: none;
+}
+.input-selection button {
+    cursor: none;
 }
 .pencil_p_element {
     font-size: 0.7rem;
@@ -75,12 +81,21 @@ button {
     margin: 0;
     padding: 0;
 }
-.pen-table {
-    cursor: pointer;
+#tool-pointer {
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    pointer-events: none;
+    z-index: 3;
 }
-.pencil-table {
-    cursor: crosshair;
+#pointer-image {
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
 }
-.temp-table {
-    cursor: help;
+* {
+    cursor: none;
+}
+#game-time {
+    color: darkkhaki;
 }
