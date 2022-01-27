@@ -412,13 +412,13 @@ function findShortArr(bo){
 // Removes cells depending on user difficulty choices
 function removeDiff(diff, bo) {
     if (diff == 1){
-        diff = 30;
+        diff = 35;
     } else if (diff == 2) {
-        diff = 50;
+        diff = 40;
     } else if (diff == 3) {
-        diff = 55;
+        diff = 50;
     } else if (diff == 4) {
-        diff = 60;
+        diff = 55;
     }
 
     for (let i = 0; i < (diff); i++) {
@@ -689,27 +689,6 @@ function giveHint() {
     }
 }
 
-// function placeUserInput() {
-//     let tempBoard = makehtmlBoardAnArray();
-//     for (let i =0; i < 9; i++) {
-//         for (let j = 0; j < 9; j++){
-//             if (tempBoard[i][j].textContent != userBoard[i][j]){
-//                 // if (tempBoard[i][j].textContent != "") {
-//                     if (usePen){
-//                         userBoard[i][j] = Number(tempBoard[i][j].textContent);
-//                         populateBoard(userBoard)
-//                     }else if (usePencil) {
-//                         console.log(htmlBoard[i][j])
-//                         console.log("Pencil Used")
-//                     } else if (useTemp) {
-//                         console.log("Temp Used")
-//                     }
-//                 // }
-//             }
-//         }
-//     }
-// }
-
 const penEl = document.getElementById("pen-permanent");
 let usePen = true;
 penEl.addEventListener("click", penFunction);
@@ -800,4 +779,16 @@ function gameTimer() {
     setTimeout(() => gameTimer(), 1000);
 }
 
+let pauseBtn = document.getElementById("pause-btn");
 
+function pauseGame() {
+
+    if (pauseBtn.textContent == "Pause") {
+        timerStart = false;
+        pauseBtn.textContent = "Resume";
+    } else {
+        pauseBtn.textContent = "Pause";
+        timerStart = true;
+        gameTimer();
+    }
+}

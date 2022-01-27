@@ -70,6 +70,9 @@ button {
 .input-selection button {
     cursor: none;
 }
+button:hover {
+    background-color: darkgoldenrod;
+}
 .pencil_p_element {
     font-size: 0.7rem;
     height: 0.7rem;
