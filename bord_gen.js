@@ -209,7 +209,7 @@ function startNewGame(diff) {
                     } else {
                         event.target.style.backgroundColor = "lightgray"
                     }
-                    event.target.removeEventListener("click", boardEventListnerFunction)
+                    event.target.addEventListener("click", boardEventListnerFunction)
                 }
             })
         }
@@ -228,6 +228,9 @@ function boardEventListnerFunction() {
         if (isBoxDisplayed) {
             closeInputBox();
         }
+        return
+    }
+    if (!timerStart) {
         return
     }
     openInputBox(this.id);
@@ -382,7 +385,6 @@ function listPossibleValues(bo, row, col) {
     for (i = 0; i < num_arr.length; i++) {
         if (!temp_list.includes(num_arr[i])) {
             pos_list.push(i + 1)
-            
         }
     }
     
